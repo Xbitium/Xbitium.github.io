@@ -122,7 +122,7 @@
         .theme-toggle-btn {
             position: fixed;
             top: 16px;
-            left: 16px;
+            left: 16px;      /* far left */
             right: auto;
             padding: 7px 16px;
             font-size: 15px;
@@ -173,7 +173,7 @@
         body.light-mode .metric-value,
         body.light-mode .executive-summary,
         body.light-mode .qual-title,
-        body.light-mode .qual-text,
+        body-light-mode .qual-text,
         body.light-mode .job-title,
         body.light-mode .job-company,
         body.light-mode .job-meta,
@@ -463,6 +463,7 @@
             color: #e5e7eb;
         }
 
+        /* Colored bullets for experience section */
         .section-experience .job-description ul {
             list-style: none;
             padding-left: 0;
@@ -532,6 +533,7 @@
             color: #e5e7eb;
         }
 
+        /* Detection & UEBA Use Cases as cards */
         .section-ueba .usecase-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -644,11 +646,10 @@
                 text-decoration: none;
             }
 
-            /* Keep sections / jobs from splitting across pages */
+            /* keep sections and cards from breaking across pages */
             .section,
             .experience-item,
             .usecase-card {
-                break-inside: avoid;
                 page-break-inside: avoid;
             }
         }
@@ -697,7 +698,7 @@
                         <p>
                             Principal Cybersecurity Engineer and architect with 15+ years securing large-scale
                             enterprise and government environments and deep hands-on expertise across SIEM, UEBA,
-                            XDR, and SOAR Automation. Designs and operationalizes end-to-end security solutions that measurably
+                            XDR, and SOAR automation. Designs and operationalizes end-to-end security solutions that measurably
                             reduce attack surface and elevate detection maturity—from strategic gap analysis and roadmap
                             definition through deployment, optimization, and executive reporting.
                         </p>
@@ -705,10 +706,10 @@
                             Leads complex SIEM and cyber tools migrations, builds resilient telemetry platforms, and delivers
                             high-fidelity detections and automations for SOC operations. Strong expertise with Palo Alto
                             Networks XSIAM and XSOAR, including advanced SOAR playbook engineering, Python-based
-                            automation, Ansible-driven configuration management, and integrated runbooks across SIEM, SOAR,
-                            EDR/XDR, and other security tools to standardize incident handling and reduce MTTR. Experienced
-                            in building custom security solutions, APIs, webhooks, and dashboards using Python, Flask, Node.js,
-                            JavaScript, React, Grafana, Kibana, and Power BI with cloud-native integrations.
+                            automation, and integrated runbooks across SIEM, SOAR, EDR/XDR, and other security tools to
+                            standardize incident handling and reduce MTTR. Experienced in building custom security
+                            solutions, APIs, webhooks, and dashboards using Python, Flask, Node.js, JavaScript, React,
+                            Grafana, Kibana, and Power BI with cloud-native integrations.
                         </p>
 
                         <div class="metrics-highlight">
@@ -738,7 +739,7 @@
                     </div>
                 </section>
 
-                <!-- CORE QUALIFICATIONS & KEY CAPABILITIES (MERGED) -->
+                <!-- CORE QUALIFICATIONS & KEY CAPABILITIES -->
                 <section class="section">
                     <h2 class="section-title">Core Qualifications &amp; Key Capabilities</h2>
                     <div class="qualifications-grid">
@@ -766,8 +767,8 @@
                             <div class="qual-text">
                                 Design and implement automation using Cortex XSOAR and SIEM-native SOAR modules, translating
                                 SOC runbooks into codified playbooks that orchestrate enrichment, triage, containment,
-                                notifications, and ticketing. Use Python, Ansible, and APIs to integrate tools and continuously
-                                tune for reduced MTTR and higher fidelity.
+                                notifications, and ticketing. Use Python and APIs to integrate tools and continuously tune
+                                for reduced MTTR and higher fidelity.
                             </div>
                         </div>
 
@@ -777,15 +778,6 @@
                                 Develop operational dashboards and portals using Flask, Node.js, JavaScript, and React;
                                 integrate SIEM and XDR data into Grafana, Kibana, and Power BI to provide SOC, IR, and
                                 executive stakeholders with real-time, drill-down visibility across cloud and on-prem.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Infrastructure as Code &amp; Platform Automation</div>
-                            <div class="qual-text">
-                                Use Ansible to standardize deployment and configuration of SIEM forwarders, XDR agents,
-                                Linux servers, and network appliances; codify repeatable builds, baselines, and playbooks
-                                for SOC and platform teams across lab and production environments.
                             </div>
                         </div>
 
@@ -809,20 +801,28 @@
                         </div>
 
                         <div class="qual-card">
-                            <div class="qual-title">Cyber Threat Hunting &amp; Advanced Analytics</div>
+                            <div class="qual-title">Infrastructure-as-Code &amp; Ansible Automation</div>
                             <div class="qual-text">
-                                Build XQL/SPL queries and hunt packs that leverage UEBA signals, threat intel, and sequence
-                                analytics to uncover stealthy threats, hands-on-keyboard activity, and long-dwell intrusions
-                                across enterprise environments.
+                                Use Ansible playbooks and roles to standardize Linux hardening, SIEM/SOAR node builds, content
+                                deployment, and configuration drift control across lab and enterprise environments.
                             </div>
                         </div>
 
                         <div class="qual-card">
-                            <div class="qual-title">Program Leadership &amp; Stakeholder Alignment</div>
+                            <div class="qual-title">Platform Reliability &amp; Operations</div>
                             <div class="qual-text">
-                                Lead multi-vendor, multi-stakeholder security programs; translate mission and business
-                                requirements into roadmaps, KPIs, and exec-ready reporting while guiding SOC, IR, and
-                                platform teams through adoption and change management.
+                                Maintain highly available SIEM, XDR, and SOAR platforms through automated patching,
+                                upgrade runbooks, health monitoring, and rollback strategies that minimize downtime
+                                and protect mission-critical logging pipelines.
+                            </div>
+                        </div>
+
+                        <div class="qual-card">
+                            <div class="qual-title">Detection Engineering &amp; Content Lifecycle</div>
+                            <div class="qual-text">
+                                Implement detection-as-code workflows with GitHub, CI/CD, and IaC-style patterns to manage
+                                rule versions, testing, promotion, rollback, and quality gates for correlation, UEBA, and
+                                SOAR playbooks.
                             </div>
                         </div>
                     </div>
@@ -846,7 +846,7 @@
                                 <li>Implement Detection-as-Code with GitHub Actions—automated testing, promotion, versioning, rollback, and controlled production releases.</li>
                                 <li>Engineer custom modules and APIs for data parsing, RPC integration, JSON job building, webhooks, and cross-system messaging between telemetry, SIEM, XDR, and SOAR services.</li>
                                 <li>Design and maintain SOAR runbooks and playbooks aligned to SOC workflows, codifying incident response processes across SIEM, SOAR, &amp; XDR.</li>
-                                <li>Use Ansible playbooks to deploy and harden collectors, forwarders, and Linux-based telemetry services across lab and client environments.</li>
+                                <li>Use Ansible to standardize SIEM/XDR/SOAR server builds, Linux hardening baselines, and content deployment across lab and client environments.</li>
                                 <li>Build security and operations dashboards using Flask-based UIs, JavaScript, and Grafana/Kibana visualizations to expose real-time metrics for leadership and SOC teams.</li>
                                 <li>Integrate cloud platforms and services into data pipelines, normalizing telemetry from AWS, Azure, and Google into unified analytics views.</li>
                             </ul>
@@ -886,8 +886,8 @@
                                 <li>Achieved 40% MTTR improvement and 25% false-positive reduction via behavioral analytics, UEBA, and risk-based prioritization.</li>
                                 <li>Implemented Zero Trust using ForeScout NAC for 98% device visibility and continuous compliance enforcement across thousands of endpoints.</li>
                                 <li>Operationalized Cisco Stealthwatch NDR with NetFlow for beaconing, DGA, and lateral movement detection across coalition &amp; mission networks.</li>
-                                <li>Used Ansible to help standardize baseline configurations and patching for SIEM, NDR, and Linux infrastructure supporting mission networks.</li>
                                 <li>Led ATO processes and Forcepoint CDS deployments across 12 classified domains, aligning controls with DoD SRG and RMF requirements.</li>
+                                <li>Used Ansible and scripting to automate deployment and configuration of sensors, collectors, and management components across multiple enclaves.</li>
                                 <li>Developed advanced correlations for MFA fatigue, privilege abuse, identity threats, and lateral movement with executive &amp; SOC dashboards.</li>
                             </ul>
                         </div>
@@ -920,7 +920,7 @@
                             <ul>
                                 <li>Served in U.S. Air Force communications and network roles, supporting secure voice and data networks across multiple security domains.</li>
                                 <li>Installed, configured, and hardened routers, switches, firewalls, and Windows/Linux servers supporting base and mission operations.</li>
-                                <li>Implemented patching, antivirus, backup, and monitoring baselines, reducing incidents, and aligning with STIG requirements.</li>
+                                <li>Implemented patching, antivirus, backup, and monitoring baselines, reducing incidents and aligning with STIG requirements.</li>
                                 <li>Provided consulting and implementation services for businesses, designing LAN/WAN, Wi-Fi, and perimeter security and modernizing legacy infrastructure.</li>
                             </ul>
                         </div>
@@ -930,4 +930,198 @@
                 <!-- DETECTION / UEBA USE CASE PORTFOLIO -->
                 <section class="section section-ueba">
                     <h2 class="section-title">Detection &amp; UEBA Use Cases</h2>
-                    <
+                    <div class="usecase-grid">
+                        <div class="usecase-card">
+                            <div class="usecase-title">Privileged Account &amp; Admin Misuse</div>
+                            <div class="usecase-text">
+                                Detect after-hours admin activity, high-volume command execution, privilege escalation,
+                                and access to sensitive systems outside normal behavior profiles.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">Authentication &amp; MFA Anomalies</div>
+                            <div class="usecase-text">
+                                Identify unusual login patterns including first-time access to sensitive apps, risky
+                                geolocations, impossible travel, and MFA fatigue/push bombing behavior.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">Data Exfiltration &amp; Insider Threat</div>
+                            <div class="usecase-text">
+                                Monitor abnormal download volumes, unusual file/database access, DLP violations, and
+                                pre-termination mass access patterns to surface potential insider risk and exfiltration.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">SSH &amp; Remote Access Security</div>
+                            <div class="usecase-text">
+                                Correlate SSH failed logins, repeated failures (brute force), and successful logins by account,
+                                source IP, and time-of-day to flag suspicious or high-risk remote access.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">sudo &amp; Privilege Escalation Monitoring</div>
+                            <div class="usecase-text">
+                                Track <code>sudo</code> command execution, sessions without a real TTY, and repeated
+                                <code>sudo</code> use patterns as indicators of privilege escalation, misuse, or hands-on-keyboard activity.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">Account &amp; Group Management Changes</div>
+                            <div class="usecase-text">
+                                Alert on local user and group creation or modification events and correlate with asset
+                                sensitivity, time-of-day, and associated admin accounts to detect risky changes.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">Critical File Integrity Monitoring</div>
+                            <div class="usecase-text">
+                                Monitor modifications to <code>/etc/passwd</code>, <code>/etc/shadow</code>,
+                                <code>/etc/sudoers</code> and other critical system files, treating changes as high/critical
+                                risk for identity and privilege integrity.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">Service, Kernel &amp; Hardware Health</div>
+                            <div class="usecase-text">
+                                Detect repeated systemd unit failures, unexpected restarts of security services and agents,
+                                disk I/O and filesystem errors, out-of-memory events, and interface resets as early indicators
+                                of availability or attack impact.
+                            </div>
+                        </div>
+                        <div class="usecase-card">
+                            <div class="usecase-title">IDS &amp; YARA-Based Threat Detection</div>
+                            <div class="usecase-text">
+                                Design and tune IDS signatures and YARA rules for malware, tooling, and TTP-specific patterns,
+                                enabling custom alerting and higher-fidelity detections across Suricata/Snort and endpoint
+                                telemetry.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TECHNICAL EXPERTISE -->
+                <section class="section">
+                    <h2 class="section-title">Technical Expertise</h2>
+                    <div class="badge-container">
+                        <span class="badge badge-featured">SIEM Platforms (Splunk, QRadar, ArcSight, Elastic, Datadog, Graylog, Exabeam, XSIAM)</span>
+                        <span class="badge badge-featured">UEBA Platforms (Exabeam, Securonix)</span>
+                        <span class="badge badge-featured">Palo Alto XSIAM / Cortex XDR</span>
+                        <span class="badge badge-featured">Cortex XSOAR &amp; SOAR Playbooks</span>
+
+                        <span class="badge">Kafka / Pulsar</span>
+                        <span class="badge">Cribl / Apache NiFi</span>
+                        <span class="badge">Python (Automation &amp; APIs)</span>
+                        <span class="badge">Ansible / Infrastructure-as-Code</span>
+                        <span class="badge">PowerShell / Bash / Linux Hardening</span>
+                        <span class="badge">Custom Security Tooling</span>
+                        <span class="badge">Node.js / JavaScript / React</span>
+                        <span class="badge">Flask / REST APIs / Webhooks</span>
+                        <span class="badge">Grafana / Kibana / Power BI</span>
+                        <span class="badge">GitHub / CI/CD (GitHub Actions)</span>
+                        <span class="badge">EDR / XDR (Cortex, Carbon Black, Trellix)</span>
+                        <span class="badge">SailPoint IGA</span>
+                        <span class="badge">CyberArk / Delinea PAM</span>
+                        <span class="badge">Okta / Azure AD</span>
+                        <span class="badge">ForeScout NAC</span>
+                        <span class="badge">Cisco Stealthwatch NDR</span>
+                        <span class="badge">NetFlow &amp; Flow Sensors</span>
+                        <span class="badge">Network Security Monitoring (NSM)</span>
+                        <span class="badge">Web Application Firewall (WAF)</span>
+                        <span class="badge">CASB &amp; SASE Architectures</span>
+                        <span class="badge">Trellix DLP</span>
+                        <span class="badge">Varonis DSP</span>
+                        <span class="badge">AWS / Azure Cloud Integrations</span>
+                        <span class="badge">MITRE ATT&amp;CK</span>
+                        <span class="badge">NIST CSF / RMF</span>
+                        <span class="badge">Zero Trust (ZTNA)</span>
+                    </div>
+                </section>
+
+                <!-- CERTIFICATIONS -->
+                <section class="section">
+                    <h2 class="section-title">Certifications</h2>
+                    <div class="cert-grid">
+                        <div class="cert-item">✓ EC-Council Certified Ethical Hacker (CEH)</div>
+                        <div class="cert-item">✓ GIAC Certified Incident Handler (GCIH)</div>
+                        <div class="cert-item">✓ CompTIA Security+</div>
+                        <div class="cert-item">✓ CompTIA Network+</div>
+                        <div class="cert-item">✓ CompTIA A+</div>
+                        <div class="cert-item">✓ Red Hat Certified System Administrator (RHCSA)</div>
+                        <div class="cert-item">✓ ArcSight Certified Administrator (ACIA)</div>
+                        <div class="cert-item">✓ ArcSight Certified Security Analyst (ACSA)</div>
+                        <div class="cert-item">✓ Cribl Certified User</div>
+                        <div class="cert-item">✓ Cribl Certified Services Consultant</div>
+                        <div class="cert-item">✓ Forcepoint Certified HS Guard Admin</div>
+                        <div class="cert-item">✓ Forescout Certified Associate (FSCA)</div>
+                    </div>
+                </section>
+
+                <!-- EDUCATION & ADDITIONAL INFORMATION -->
+                <section class="section">
+                    <h2 class="section-title">Education &amp; Additional Information</h2>
+                    <div class="info-item">
+                        <div class="info-label">Education</div>
+                        <div class="info-value">
+                            CCAF – Data/Voice Network Systems (Top Honors) | Electronics &amp; Communications (Honors)
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Clearance</div>
+                        <div class="info-value">
+                            U.S. Top Secret/SCI (DoD) – Active 23 years
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Languages</div>
+                        <div class="info-value">
+                            Bilingual English / Spanish
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Work Mode</div>
+                        <div class="info-value">
+                            Remote / Hybrid / On-site | Open to relocation
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="footer">
+                © 2025 Julio Martinez | Principal Cybersecurity Engineer | JM@xbitium.com
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const btn = document.getElementById('themeToggleBtn');
+            if (!btn) return;
+
+            function applyTheme(mode) {
+                if (mode === 'light') {
+                    document.body.classList.add('light-mode');
+                } else {
+                    document.body.classList.remove('light-mode');
+                }
+            }
+
+            let saved = null;
+            try {
+                saved = localStorage.getItem('resume-theme');
+            } catch (e) {}
+
+            if (saved === 'light') {
+                applyTheme('light');
+            }
+
+            btn.addEventListener('click', function () {
+                const isLight = document.body.classList.toggle('light-mode');
+                try {
+                    localStorage.setItem('resume-theme', isLight ? 'light' : 'dark');
+                } catch (e) {}
+            });
+        })();
+    </script>
+</body>
+</html>
