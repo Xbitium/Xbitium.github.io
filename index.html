@@ -173,7 +173,7 @@
         body.light-mode .metric-value,
         body.light-mode .executive-summary,
         body.light-mode .qual-title,
-        body-light-mode .qual-text,
+        body.light-mode .qual-text,
         body.light-mode .job-title,
         body.light-mode .job-company,
         body.light-mode .job-meta,
@@ -591,17 +591,28 @@
             }
         }
 
+        /* ═══════════════════════════════════════════════════════════
+           PRINT STYLES - Optimized for 4+ page PDF output
+           Page 1: Header + Executive Summary + Core Qualifications
+           Page 2-3: Professional Experience
+           Page 4+: UEBA Use Cases, Technical Expertise, Certs, Education
+           ═══════════════════════════════════════════════════════════ */
         @media print {
+            /* Base reset for print */
             body {
                 background: #ffffff;
                 padding: 0;
+                font-size: 11pt;
+                line-height: 1.4;
             }
 
+            /* Hide UI buttons */
             .print-button,
             .theme-toggle-btn {
                 display: none !important;
             }
 
+            /* Container reset */
             .resume-container {
                 max-width: 100%;
                 margin: 0;
@@ -610,7 +621,7 @@
                 box-shadow: none;
                 background: #ffffff;
                 color: #111827;
-                padding: 14px 18px 18px;
+                padding: 10px 16px 14px;
                 animation: none;
             }
 
@@ -618,45 +629,297 @@
                 display: none;
             }
 
-            .subtitle,
-            .section-title,
-            .metric-label,
-            .qual-text,
-            .job-meta,
-            .info-label,
-            .info-value,
-            .footer {
-                color: #374151;
+            /* Tighten content gap for print */
+            .content {
+                gap: 10px;
+            }
+
+            .section {
+                padding-top: 6px;
+            }
+
+            /* ─────────────────────────────────────────────────────────
+               PAGE 1: Header + Executive Summary + Core Qualifications
+               Expanded to fill the page
+               ───────────────────────────────────────────────────────── */
+            
+            /* Sections on page 1 get more breathing room */
+            .section:first-of-type,
+            .section:nth-of-type(2) {
+                padding-top: 12px;
+                margin-bottom: 10px;
+            }
+
+            .header {
+                margin-bottom: 18px;
+                gap: 18px;
+            }
+
+            .header-photo {
+                width: 95px;
+                height: 95px;
+            }
+
+            .name {
+                font-size: 24pt;
+                margin-bottom: 4px;
+            }
+
+            .title {
+                font-size: 13pt;
+                margin-bottom: 3px;
+            }
+
+            .subtitle {
+                font-size: 11pt;
+                margin-bottom: 8px;
+            }
+
+            .header-highlights {
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+
+            .header-pill {
+                font-size: 10pt;
+                padding: 4px 10px;
+            }
+
+            .contact-info {
+                font-size: 10pt;
+                gap: 8px 16px;
+            }
+
+            /* Executive Summary: breathing room */
+            .executive-summary {
+                font-size: 11pt;
+                line-height: 1.55;
+            }
+
+            .executive-summary p {
+                margin: 0 0 12px;
+            }
+
+            .metrics-highlight {
+                margin-top: 14px;
+                padding: 14px 16px;
+                border-radius: 10px;
+            }
+
+            .metrics-row {
+                gap: 12px;
+            }
+
+            .metric-item {
+                min-width: 130px;
+                padding: 8px 12px;
+                border-radius: 8px;
+            }
+
+            .metric-value {
+                font-size: 14pt;
+            }
+
+            .metric-label {
+                font-size: 9pt;
+            }
+
+            /* Section titles */
+            .section-title {
+                font-size: 11pt;
+                margin-bottom: 10px;
+                color: #111827;
+                background: none;
                 -webkit-background-clip: border-box;
             }
 
-            .section-title {
+            /* CORE QUALIFICATIONS: 3-column, expanded padding */
+            .qualifications-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .qual-card {
+                padding: 10px 12px;
+                border-radius: 8px;
+                background: #f9fafb;
+                border: 1px solid #e5e7eb;
+                box-shadow: none;
+            }
+
+            .qual-title {
+                font-size: 10pt;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 4px;
+            }
+
+            .qual-text {
+                font-size: 9pt;
+                color: #374151;
+                line-height: 1.45;
+            }
+
+            /* Force page break BEFORE Professional Experience */
+            .section-experience {
+                page-break-before: always;
+            }
+
+            /* Experience section */
+            .experience-item {
+                margin-bottom: 8px;
+            }
+
+            .job-header {
+                margin-bottom: 3px;
+            }
+
+            .job-title {
+                font-size: 11pt;
                 color: #111827;
             }
 
-            .badge,
-            .cert-item {
+            .job-company {
+                font-size: 10pt;
+                color: #374151;
+            }
+
+            .job-meta {
+                font-size: 9pt;
+                color: #6b7280;
+            }
+
+            .job-description ul {
+                margin: 3px 0 0;
+                font-size: 9pt;
+            }
+
+            .job-description li {
+                margin-bottom: 2px;
+                color: #374151;
+            }
+
+            /* ─────────────────────────────────────────────────────────
+               PAGE 3+: UEBA Use Cases, Technical Expertise, Certs, Education
+               Expanded to fill the page
+               ───────────────────────────────────────────────────────── */
+
+            /* Force page break BEFORE UEBA Use Cases */
+            .section-ueba {
+                page-break-before: always;
+            }
+
+            /* Add spacing between sections on page 3+ */
+            .section-ueba,
+            .section-ueba ~ .section {
+                padding-top: 14px;
+                margin-bottom: 8px;
+            }
+
+            /* UEBA Use Cases: 3-column grid, expanded */
+            .section-ueba .usecase-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .usecase-card {
+                padding: 12px 14px;
+                border-radius: 8px;
+                background: #f9fafb;
+                border: 1px solid #e5e7eb;
+                box-shadow: none;
+            }
+
+            .usecase-title {
+                font-size: 10pt;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 5px;
+            }
+
+            .usecase-text {
+                font-size: 9pt;
+                color: #374151;
+                line-height: 1.5;
+            }
+
+            /* Technical Expertise badges: expanded */
+            .badge-container {
+                gap: 8px;
+            }
+
+            .badge {
+                font-size: 9pt;
+                padding: 5px 10px;
                 border-color: #9ca3af;
                 background: #ffffff;
                 color: #111827;
             }
 
+            .badge-featured {
+                border-color: #6b7280;
+                font-weight: 600;
+            }
+
+            /* Certifications: expanded */
+            .cert-grid {
+                gap: 8px;
+            }
+
+            .cert-item {
+                font-size: 9pt;
+                padding: 5px 10px;
+                border-color: #9ca3af;
+                background: #ffffff;
+                color: #111827;
+            }
+
+            /* Education & Additional Info: expanded */
+            .info-item {
+                font-size: 10pt;
+                margin-bottom: 6px;
+            }
+
+            .info-label {
+                min-width: 85px;
+                color: #374151;
+            }
+
+            .info-value {
+                color: #111827;
+            }
+
+            /* Footer */
+            .footer {
+                margin-top: 16px;
+                font-size: 9pt;
+                color: #6b7280;
+            }
+
+            /* Links */
             a {
                 color: inherit;
                 text-decoration: none;
             }
 
-            /* keep sections and cards from breaking across pages */
+            /* Prevent orphaned content */
             .section,
             .experience-item,
-            .usecase-card {
+            .usecase-card,
+            .qual-card {
                 page-break-inside: avoid;
+            }
+
+            /* Keep job header with its bullets */
+            .job-header {
+                page-break-after: avoid;
             }
         }
     </style>
 </head>
 <body>
-    <button class="print-button" onclick="window.print()">
+    <!-- Print button: auto-switches to light mode for clean PDF output -->
+    <button class="print-button" id="printBtn">
         <span>🧾</span><span>Save as PDF</span>
     </button>
 
@@ -1095,9 +1358,12 @@
 
     <script>
         (function () {
-            const btn = document.getElementById('themeToggleBtn');
-            if (!btn) return;
-
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const printBtn = document.getElementById('printBtn');
+            
+            // ─────────────────────────────────────────────────────────────
+            // Theme toggle: defaults to dark, remembers user preference
+            // ─────────────────────────────────────────────────────────────
             function applyTheme(mode) {
                 if (mode === 'light') {
                     document.body.classList.add('light-mode');
@@ -1106,21 +1372,49 @@
                 }
             }
 
+            // Check localStorage for saved preference (default: dark)
             let saved = null;
             try {
                 saved = localStorage.getItem('resume-theme');
             } catch (e) {}
 
+            // Only apply light if explicitly saved as light
             if (saved === 'light') {
                 applyTheme('light');
             }
 
-            btn.addEventListener('click', function () {
-                const isLight = document.body.classList.toggle('light-mode');
-                try {
-                    localStorage.setItem('resume-theme', isLight ? 'light' : 'dark');
-                } catch (e) {}
-            });
+            // Toggle button handler
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function () {
+                    const isLight = document.body.classList.toggle('light-mode');
+                    try {
+                        localStorage.setItem('resume-theme', isLight ? 'light' : 'dark');
+                    } catch (e) {}
+                });
+            }
+
+            // ─────────────────────────────────────────────────────────────
+            // Print/PDF: auto-switch to light mode for clean printing
+            // ─────────────────────────────────────────────────────────────
+            if (printBtn) {
+                printBtn.addEventListener('click', function () {
+                    // Remember current theme state
+                    const wasLight = document.body.classList.contains('light-mode');
+                    
+                    // Force light mode for PDF
+                    document.body.classList.add('light-mode');
+                    
+                    // Small delay to let styles apply, then print
+                    setTimeout(function () {
+                        window.print();
+                        
+                        // Restore original theme after print dialog closes
+                        if (!wasLight) {
+                            document.body.classList.remove('light-mode');
+                        }
+                    }, 100);
+                });
+            }
         })();
     </script>
 </body>
