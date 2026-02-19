@@ -915,6 +915,134 @@
                 page-break-after: avoid;
             }
         }
+    
+        /* ═══════════════════════════════════════════════════════════
+           PROFESSIONAL TIMELINE — compact 3-column row layout
+           Each row: [date/duration] [dot] [role/company/location]
+           ═══════════════════════════════════════════════════════════ */
+
+        .timeline-grid {
+            display: flex;
+            flex-direction: column;
+            /* Thin vertical connector line running through all dots */
+            position: relative;
+        }
+
+        /* The vertical spine line connecting all dots */
+        .timeline-grid::before {
+            content: "";
+            position: absolute;
+            left: 118px;           /* aligns with center of .tl-dot */
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, #38bdf8 0%, #a855f7 60%, #f97316 100%);
+            opacity: 0.45;
+        }
+
+        /* One row per job */
+        .tl-item {
+            display: grid;
+            grid-template-columns: 112px 16px 1fr;  /* date | dot | content */
+            align-items: start;
+            gap: 0 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .tl-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Left: date stack */
+        .tl-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-top: 2px;
+            gap: 1px;
+        }
+
+        .tl-date {
+            font-size: 11px;
+            color: #9ca3af;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        /* Duration badge — small pill */
+        .tl-dur {
+            font-size: 10px;
+            font-weight: 700;
+            color: #38bdf8;
+            text-align: right;
+            letter-spacing: 0.03em;
+        }
+
+        /* Center: the dot on the spine */
+        .tl-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38bdf8;
+            border: 1.5px solid #0b1120;
+            box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+            margin-top: 4px;
+            justify-self: center;
+            flex-shrink: 0;
+        }
+
+        /* Right: role, company, location */
+        .tl-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            padding-top: 1px;
+        }
+
+        .tl-role {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e5e7eb;
+            line-height: 1.3;
+        }
+
+        .tl-company {
+            font-size: 11.5px;
+            color: #d1d5db;
+        }
+
+        .tl-loc {
+            font-size: 10.5px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* ── Light mode overrides for timeline ── */
+        body.light-mode .tl-date       { color: #374151; }
+        body.light-mode .tl-dur        { color: #2563eb; }
+        body.light-mode .tl-role       { color: #111827; }
+        body.light-mode .tl-company    { color: #374151; }
+        body.light-mode .tl-loc        { color: #6b7280; }
+        body.light-mode .tl-dot        { background: #2563eb; border-color: #ffffff; box-shadow: none; }
+        body.light-mode .timeline-grid::before { opacity: 0.25; }
+        body.light-mode .tl-item       { border-bottom-color: rgba(0,0,0,0.08); }
+
+        /* ── Print styles for timeline ── */
+        @media print {
+            .timeline-grid::before {
+                background: #9ca3af;
+                opacity: 0.5;
+            }
+            .tl-item        { padding: 3px 0; border-bottom-color: rgba(0,0,0,0.07); }
+            .tl-date        { font-size: 8pt; color: #6b7280; }
+            .tl-dur         { font-size: 8pt; color: #2563eb; }
+            .tl-role        { font-size: 9pt; color: #111827; }
+            .tl-company     { font-size: 8.5pt; color: #374151; }
+            .tl-loc         { font-size: 8pt; color: #6b7280; }
+            .tl-dot         { background: #374151; box-shadow: none; border-color: #ffffff; }
+        }
+
     </style>
 </head>
 <body>
@@ -940,16 +1068,14 @@
                     <div class="title">Principal Engineer | Cybersecurity Architect</div>
                     <div class="subtitle">15+ Years Cybersecurity Expertise | DoD / Federal / Enterprise / Health / Finance</div>
                     <div class="header-highlights">
-                        <div class="header-pill">20+ Years IT Systems</div>
+                        <div class="header-pill">25+ Years IT Systems</div>
                         <div class="header-pill">TS/SCI – (DoD)</div>
                         <div class="header-pill">SIEM | Analytics | Observability | Telemetry | Automation SME</div>
                     </div>
                     <div class="contact-info">
                         <span>📍 Tampa, FL</span>
-                        <span>✉️ <a href="mailto:Julio@exzlium.com"> Julio@exzlium.com</a></span>
-                        <span>🔗 <a href="https://www.linkedin.com/in/xbitium/" target="_blank" rel="noreferrer">linkedin.com/in/xbitium</a></span>
-                        <span>💻 <a href="https://github.com" target="_blank" rel="noreferrer">GitHub – available on request</a></span>
-                    </div>
+                        <span>✉️ <a href="/cdn-cgi/l/email-protection#317b445d585e7154494b5d58445c1f525e5c"> <span class="__cf_email__" data-cfemail="ce84bba2a7a18eabb6b4a2a7bba3e0ada1a3">[email&#160;protected]</span></a></span>
+                        <span>🔗 <a href="https://www.linkedin.com/in/xbitium/" target="_blank" rel="noreferrer">linkedin.com/in/xbitium</a></span>                    </div>
                 </div>
             </header>
 
@@ -992,6 +1118,14 @@
                                 <div class="metric-item">
                                     <span class="metric-value">50%</span>
                                     <span class="metric-label">False Positive Reduction</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-value">150k+</span>
+                                    <span class="metric-label">EPS at Peak Ingest</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-value">50+</span>
+                                    <span class="metric-label">Analysts &amp; Engineers Led</span>
                                 </div>
                                 <div class="metric-item">
                                     <span class="metric-value">Python</span>
@@ -1103,15 +1237,14 @@
                         </div>
                         <div class="job-description">
                             <ul>
-                                <li>Deliver SIEM automation &amp; cybersecurity architecture for Palo Alto Networks, Red Matter Solutions, and BlackLake Security.</li>
-                                <li>Build cross-SIEM and XSIAM orchestration (Splunk, ArcSight, Elastic, Sumo Logic, XSIAM) with unified enrichment and identity/threat intel APIs.</li>
-                                <li>Develop Python-based automation and microservices (FastAPI/Flask) for telemetry pipelines, KPI dashboards, and real-time system monitoring.</li>
-                                <li>Implement Detection-as-Code with GitHub Actions—automated testing, promotion, versioning, rollback, and controlled production releases.</li>
-                                <li>Engineer custom modules and APIs for data parsing, RPC integration, JSON job building, webhooks, and cross-system messaging between telemetry, SIEM, XDR, and SOAR services.</li>
-                                <li>Design and maintain SOAR runbooks and playbooks aligned to SOC workflows, codifying incident response processes across SIEM, SOAR, &amp; XDR.</li>
-                                <li>Use Ansible to standardize SIEM/XDR/SOAR server builds, Linux hardening baselines, and content deployment across lab and client environments.</li>
-                                <li>Build security and operations dashboards using Flask-based UIs, JavaScript, and Grafana/Kibana visualizations to expose real-time metrics for leadership and SOC teams.</li>
-                                <li>Integrate cloud platforms and services into data pipelines, normalizing telemetry from AWS, Azure, and Google into unified analytics views.</li>
+                                <li>Architect and deploy Cortex XSIAM and XDR platforms end-to-end — onboarding telemetry sources, building XQL detections, configuring BIOC rules, and operationalizing threat intel for enterprise and DoD clients.</li>
+                                <li>Engineer advanced Cortex XSOAR playbooks in Python — automating alert triage, enrichment, containment, ticketing, and cross-tool orchestration across XDR, SIEM, identity, and ticketing systems.</li>
+                                <li>Develop Python microservices and REST APIs (FastAPI/Flask) for telemetry ingestion pipelines, real-time KPI dashboards, webhook integrations, and automated reporting workflows.</li>
+                                <li>Build Python-based XSOAR automation scripts, custom integrations, and API connectors bridging XSIAM, XDR, and third-party security tools with zero manual handoff.</li>
+                                <li>Implement Detection-as-Code using GitHub Actions — automated testing, versioning, promotion, and rollback of XQL/XSIAM correlation rules and XSOAR playbooks across environments.</li>
+                                <li>Design and operationalize XSOAR incident lifecycle workflows — from ingestion and deduplication through escalation, remediation, and post-incident reporting with full audit trail.</li>
+                                <li>Deliver Splunk ES integration touchpoints where needed — feeding normalized XDR and XSIAM telemetry into Splunk for cross-platform correlation and executive dashboards.</li>
+                                <li>Build Flask/JavaScript operational portals and Grafana dashboards surfacing live XSIAM, XDR, and automation metrics for SOC and leadership stakeholders.</li>
                             </ul>
                         </div>
                     </div>
@@ -1124,14 +1257,14 @@
                         </div>
                         <div class="job-description">
                             <ul>
-                                <li>Architected SIEM strategy and analytics for FHFA with MITRE ATT&amp;CK-aligned detections, advanced correlation, and threat intel integrations.</li>
-                                <li>Optimized SIEM performance via configuration tuning and dashboard/search refactoring, improving search runtime and operational visibility.</li>
-                                <li>Delivered SPL and analytics training and documentation, enabling security and operations teams to build searches, dashboards, and investigations independently.</li>
-                                <li>Led incident response enablement in SIEM: authored advanced use cases and notable-event workflows, guided root-cause investigations, and produced executive-ready reporting.</li>
-                                <li>Designed and operationalized global Palo Alto XSIAM/XDR deployments, automated playbooks and threat intel integrations.</li>
-                                <li>Built Cortex XSOAR playbooks for alert enrichment, ticketing, containment, and notifications; mapped existing SOC runbooks into automated workflows for XSIAM migration.</li>
-                                <li>Integrated STIX/TAXII/MISP feeds, and BIOCs with XQL analytics to enhance hunting and detection across PAN-OS, Prisma, and XDR telemetry.</li>
-                                <li>Provided Tier 3 engineering support, tuning ingestion/parsers, normalizing datasets, hardening content pipelines, and coordinating global change windows and content releases.</li>
+                                <li>Architected and deployed Splunk Enterprise Security (ES) for FHFA — building data models, correlation searches, adaptive response actions, and risk-based alerting (RBA) aligned to MITRE ATT&amp;CK.</li>
+                                <li>Engineered Splunk ES notable event workflows end-to-end: use case authoring, triage automation, analyst queue management, and executive-ready reporting via custom dashboards.</li>
+                                <li>Built and tuned Cortex XSOAR playbooks (Python) to automate Splunk ES notable event response — enrichment via threat intel, VirusTotal, and identity APIs, with auto-ticketing and containment actions.</li>
+                                <li>Optimized Splunk ES performance at scale — SPL refactoring, summary index strategies, search head clustering tuning, and data model acceleration to reduce search runtime and licensing pressure.</li>
+                                <li>Delivered SPL authoring training and runbook documentation enabling SOC analysts to independently build searches, dashboards, and investigation workflows in Splunk ES.</li>
+                                <li>Designed XSOAR incident types, layouts, and playbook trees mapping existing SOC runbooks into fully automated Splunk ES → XSOAR response pipelines.</li>
+                                <li>Integrated STIX/TAXII/MISP threat intel feeds into Splunk ES and XSOAR for automated IoC enrichment, threat scoring, and hunting across ingested telemetry.</li>
+                                <li>Provided Tier 3 Splunk engineering support — parser/TA development, CIM normalization, ingestion pipeline hardening, and coordinated global content release windows.</li>
                             </ul>
                         </div>
                     </div>
@@ -1144,14 +1277,14 @@
                         </div>
                         <div class="job-description">
                             <ul>
-                                <li>Architected enterprise SIEM/NDR/NAC with Kafka pipelines processing 12TB/day at 150k EPS across multi-domain environments.</li>
-                                <li>Built comprehensive ingestion (Kafka + Cribl + NiFi) with DLQs, backpressure handling, replay, and schema governance for resilient telemetry.</li>
-                                <li>Achieved 40% MTTR improvement and 25% false-positive reduction via behavioral analytics, UEBA, and risk-based prioritization.</li>
-                                <li>Implemented Zero Trust using ForeScout NAC for 98% device visibility and continuous compliance enforcement across thousands of endpoints.</li>
-                                <li>Operationalized Cisco Stealthwatch NDR with NetFlow for beaconing, DGA, and lateral movement detection across coalition &amp; mission networks.</li>
-                                <li>Led ATO processes and Forcepoint CDS deployments across 12 classified domains, aligning controls with DoD SRG and RMF requirements.</li>
-                                <li>Used Ansible and scripting to automate deployment and configuration of sensors, collectors, and management components across multiple enclaves.</li>
-                                <li>Developed advanced correlations for MFA fatigue, privilege abuse, identity threats, and lateral movement with executive &amp; SOC dashboards.</li>
+                                <li>Architected and operated enterprise Splunk ES deployment processing 12TB/day at 150k EPS across multi-domain DoD environments — managing indexer clusters, search head clusters, and heavy forwarders.</li>
+                                <li>Built Splunk ES correlation searches, risk-based alerting (RBA), data model accelerations, and CIM-normalized TAs for firewall, EDR, identity, NDR, and cloud telemetry sources.</li>
+                                <li>Achieved 40% MTTR reduction and 25% false-positive drop through Splunk UEBA tuning, risk scoring models, and behavioral baseline correlation aligned to MITRE ATT&amp;CK.</li>
+                                <li>Engineered Splunk ingestion pipelines with Kafka, Cribl, and NiFi — DLQs, backpressure handling, replay, and schema governance ensuring zero data loss at DoD scale.</li>
+                                <li>Developed Splunk dashboards and SOC operational portals for real-time incident visibility, executive KPI reporting, and cross-enclave threat hunting across coalition networks.</li>
+                                <li>Implemented Zero Trust with ForeScout NAC providing 98% device visibility; integrated NAC posture data into Splunk ES for continuous compliance correlation and alerting.</li>
+                                <li>Used Ansible to automate Splunk node builds, TA deployments, and index configuration across classified and unclassified enclaves, eliminating manual drift.</li>
+                                <li>Led ATO processes and Forcepoint CDS deployments across 12 classified domains, aligning Splunk logging controls with DoD SRG and RMF requirements.</li>
                             </ul>
                         </div>
                     </div>
@@ -1164,11 +1297,11 @@
                         </div>
                         <div class="job-description">
                             <ul>
-                                <li>Led enterprise SIEM for HHS CSIRC (CDC, FDA, NIH, IHS) with high-availability Splunk ES &amp; ArcSight and multi-source telemetry integration.</li>
-                                <li>Built greenfield SOC capabilities and SIEM programs for Fortune 500 clients using QRadar, Splunk, and ArcSight with robust GRC frameworks.</li>
-                                <li>Managed DISA-Europe ArcSight SIEM architecture, including ArcSight v4→v5 migration, advanced correlation, and RMF-aligned reporting.</li>
-                                <li>Deployed theater-wide ArcSight for USCENTCOM (Kuwait, Afghanistan, Iraq, Bahrain, Qatar) with HA and no-single-point-of-failure architecture.</li>
-                                <li>Led 24×7 NOSC/SOC operations for DTRA, managing 12 network engineers and 12 cyber analysts using ArcSight, Spectrum, SolarWinds, SCOM, and IPS platforms.</li>
+                                <li>Led enterprise Splunk ES deployment for HHS CSIRC (CDC, FDA, NIH, IHS) — high-availability indexer/search head architecture with multi-source CIM-normalized telemetry and HIPAA-aligned correlation.</li>
+                                <li>Built greenfield Splunk ES programs for Fortune 500 clients at Protiviti — data onboarding, TA development, correlation content, and SOC analyst training from zero to operational.</li>
+                                <li>Architected and migrated DISA-Europe ArcSight SIEM to Splunk ES at Deloitte — designing theater-wide deployment spanning USCENTCOM AORs (Kuwait, Afghanistan, Iraq, Bahrain, Qatar).</li>
+                                <li>Delivered Splunk ES advanced use cases for insider threat, privilege abuse, and lateral movement with risk-based scoring, adaptive response, and RMF-aligned audit reporting.</li>
+                                <li>Led 24×7 NOSC/SOC operations for DTRA — managing 12 network engineers and 12 cyber analysts with Splunk as the primary detection and triage platform alongside SolarWinds and IPS tools.</li>
                             </ul>
                         </div>
                     </div>
@@ -1348,15 +1481,198 @@
                         </div>
                     </div>
                 </section>
+            
+                <!-- ═══════════════════════════════════════════
+                     PROFESSIONAL TIMELINE
+                     Compact visual employment history — 
+                     date range | role | company | location
+                     ═══════════════════════════════════════════ -->
+                <section class="section section-timeline">
+                    <h2 class="section-title">Professional Timeline</h2>
+
+                    <!-- Tight 2-column grid: left = date+duration, right = role+company+location -->
+                    <div class="timeline-grid">
+
+                        <!-- ── 2025–Present ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Feb 2025 – Present</span>
+                                <span class="tl-dur">Present</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Principal Cybersecurity Engineer / Co-Founder</span>
+                                <span class="tl-company">Xbitium Technologies</span>
+                                <span class="tl-loc">Tampa, FL</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2023–2025 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Oct 2023 – Feb 2025</span>
+                                <span class="tl-dur">1.4 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Sr. Cybersecurity Consultant &amp; Solutions Architect</span>
+                                <span class="tl-company">Palo Alto Networks | RedMatter Solutions</span>
+                                <span class="tl-loc">Tampa, FL / Arlington, VA (Remote)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2017–2023 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">May 2017 – Sep 2023</span>
+                                <span class="tl-dur">6.3 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Lead Cybersecurity Engineer &amp; Architect</span>
+                                <span class="tl-company">GDIT / Crystal Clear Technologies – U.S. CENTCOM HQ</span>
+                                <span class="tl-loc">MacDill AFB, Tampa, FL</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2015–2017 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Nov 2015 – Apr 2017</span>
+                                <span class="tl-dur">1.5 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Lead Cybersecurity Engineer</span>
+                                <span class="tl-company">Merlin International (HHS CSIRC)</span>
+                                <span class="tl-loc">Atlanta, GA (Hybrid)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2014–2015 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Aug 2014 – Nov 2015</span>
+                                <span class="tl-dur">1.3 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Sr. Manager / SIEM SME</span>
+                                <span class="tl-company">Protiviti Inc. (Fortune 500 Clients)</span>
+                                <span class="tl-loc">Atlanta, GA (100% Travel)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2012–2014 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Apr 2012 – Aug 2014</span>
+                                <span class="tl-dur">2.3 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Sr. Manager / SIEM SME</span>
+                                <span class="tl-company">Deloitte &amp; Touche LLP (DISA Europe)</span>
+                                <span class="tl-loc">Stuttgart, Germany (On-site)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2011–2012 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Feb 2011 – Apr 2012</span>
+                                <span class="tl-dur">1.2 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Sr. Information Assurance Engineer</span>
+                                <span class="tl-company">AT&amp;T GSI (USCENTCOM)</span>
+                                <span class="tl-loc">Arifjan, Kuwait (On-site)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2009–2011 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Jan 2009 – Feb 2011</span>
+                                <span class="tl-dur">2 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">NOSC Manager / Network Engineer</span>
+                                <span class="tl-company">Defense Engineering Inc. (DTRA)</span>
+                                <span class="tl-loc">Arlington, VA (On-site)</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2006–2009 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Aug 2006 – Jan 2009</span>
+                                <span class="tl-dur">2.5 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Network Engineer</span>
+                                <span class="tl-company">Mutual Telecom Services</span>
+                                <span class="tl-loc">Multiple Locations</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2002–2006 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Aug 2002 – Aug 2006</span>
+                                <span class="tl-dur">4 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Network Specialist</span>
+                                <span class="tl-company">U.S. Air Force (Active Duty)</span>
+                                <span class="tl-loc">Ramstein, Germany</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 2001–2002 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Oct 2001 – Aug 2002</span>
+                                <span class="tl-dur">&lt;1 yr</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">Network Administrator</span>
+                                <span class="tl-company">WinVista Corporation</span>
+                                <span class="tl-loc">Fort Lauderdale, FL</span>
+                            </div>
+                        </div>
+
+                        <!-- ── 1998–2001 ── -->
+                        <div class="tl-item">
+                            <div class="tl-left">
+                                <span class="tl-date">Aug 1998 – Oct 2001</span>
+                                <span class="tl-dur">3.2 yrs</span>
+                            </div>
+                            <div class="tl-dot"></div>
+                            <div class="tl-right">
+                                <span class="tl-role">IT Support Specialist</span>
+                                <span class="tl-company">Miami-Dade County</span>
+                                <span class="tl-loc">Miami, FL</span>
+                            </div>
+                        </div>
+
+                    </div><!-- end .timeline-grid -->
+                </section><!-- end Professional Timeline -->
+
             </main>
 
             <footer class="footer">
-                © 2025 Julio Martinez | Principal Cybersecurity Engineer | Julio@exzlium.com
+                © 2025 Julio Martinez | Principal Cybersecurity Engineer | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91dbe4fdf8fed1f4e9ebfdf8e4fcbff2fefc">[email&#160;protected]</a>
             </footer>
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         (function () {
             const themeBtn = document.getElementById('themeToggleBtn');
             const printBtn = document.getElementById('printBtn');
@@ -1407,18 +1723,17 @@
                     // Small delay to let styles apply, then print
                     setTimeout(function () {
                         window.print();
-                        
-                        // Restore original theme after print dialog closes
-                        if (!wasLight) {
-                            document.body.classList.remove('light-mode');
-                        }
-                    }, 100);
+        
+                        // Restore theme after print dialog closes
+                        setTimeout(function () {
+                            if (!wasLight) {
+                                document.body.classList.remove('light-mode');
+                            }
+                        }, 1000);
+                    }, 150);
                 });
             }
         })();
     </script>
 </body>
 </html>
-
-
-
