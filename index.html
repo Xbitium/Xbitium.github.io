@@ -1,1740 +1,971 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  ============================================================================
+  JULIO MARTINEZ — NDR / Network Security Monitoring Resume
+  ----------------------------------------------------------------------------
+  Single-file, dependency-light HTML resume tailored for a Network Detection
+  & Response (NDR) engineering role: Corelight, Zeek, Suricata, Grafana,
+  Prometheus, InfluxDB, PCAP + NetFlow telemetry, and custom dashboards.
+
+  DESIGN: "NDR Operations Console" — deep ink background, cyan/signal-green
+  accents, monospace telemetry labels. Light/Dark toggle. ATS-friendly PDF
+  export via window.print() (produces SELECTABLE TEXT, not a flattened image).
+
+  HOSTING: drop this in as index.html at xbitium.github.io / xbitium.com.
+  The headshot is pulled from the live GitHub Pages URL so it works both in
+  preview and when deployed.
+  ============================================================================
+-->
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <title>Julio Martinez – Principal Engineer | Cybersecurity Architect</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        :root {
-            --bg-body: #020617;
-            --bg-card: #020617;
-            --border-card: rgba(148, 163, 184, 0.55);
-            --fg-main: #e5e7eb;
-            --fg-muted: #9ca3af;
-            --accent-1: #38bdf8;
-            --accent-2: #a855f7;
-            --accent-3: #f97316;
-            --chip-bg: rgba(15, 23, 42, 0.9);
-            --chip-border: rgba(148, 163, 184, 0.45);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 32px 16px;
-            font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #020617 0, #020617 45%, #020617 100%);
-            color: var(--fg-main);
-            font-size: 16px;
-        }
-
-        .resume-container {
-            max-width: 980px;
-            margin: 0 auto;
-            background: radial-gradient(circle at top left, #0b1120 0, #020617 55%);
-            border-radius: 20px;
-            border: 1px solid var(--border-card);
-            box-shadow:
-                0 28px 60px rgba(15, 23, 42, 0.95),
-                0 0 0 1px rgba(15, 23, 42, 0.9),
-                0 0 24px rgba(56, 189, 248, 0.16);
-            padding: 28px 34px 32px;
-            position: relative;
-            overflow: hidden;
-            animation: containerPulse 14s ease-in-out infinite;
-        }
-
-        .resume-container::before {
-            content: "";
-            position: absolute;
-            inset: -40%;
-            background:
-                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 52%),
-                radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.16), transparent 55%),
-                radial-gradient(circle at 50% 100%, rgba(249, 115, 22, 0.14), transparent 52%);
-            opacity: 0.8;
-            mix-blend-mode: screen;
-            pointer-events: none;
-            animation: glowPulse 12s ease-in-out infinite;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% {
-                opacity: 0.7;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.02);
-            }
-        }
-
-        @keyframes containerPulse {
-            0%, 100% {
-                box-shadow:
-                    0 28px 60px rgba(15, 23, 42, 0.95),
-                    0 0 0 1px rgba(15, 23, 42, 0.9),
-                    0 0 24px rgba(56, 189, 248, 0.18);
-            }
-            50% {
-                box-shadow:
-                    0 32px 72px rgba(15, 23, 42, 0.98),
-                    0 0 0 1px rgba(148, 163, 184, 0.9),
-                    0 0 34px rgba(168, 85, 247, 0.25);
-            }
-        }
-
-        .resume-inner {
-            position: relative;
-            z-index: 1;
-        }
-
-        .print-button {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            padding: 7px 16px;
-            font-size: 15px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.45);
-            background: radial-gradient(circle at top, #0f172a 0, #020617 70%);
-            color: #e5e7eb;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 20;
-            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.9);
-        }
-
-        .print-button span {
-            font-size: 16px;
-        }
-
-        .print-button:hover {
-            border-color: rgba(248, 250, 252, 0.85);
-        }
-
-        /* Light / Dark theme toggle button */
-        .theme-toggle-btn {
-            position: fixed;
-            top: 16px;
-            left: 16px;      /* far left */
-            right: auto;
-            padding: 7px 16px;
-            font-size: 15px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.45);
-            background: radial-gradient(circle at top, #020617 0, #020617 70%);
-            color: #e5e7eb;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 20;
-            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.9);
-        }
-
-        .theme-toggle-btn span {
-            font-size: 16px;
-        }
-
-        .theme-toggle-btn:hover {
-            border-color: rgba(248, 250, 252, 0.85);
-        }
-
-        /* Light mode overrides */
-        body.light-mode {
-            background: #f3f4f6;
-            color: #111827;
-        }
-
-        body.light-mode .resume-container {
-            background: #ffffff;
-            border-color: rgba(148, 163, 184, 0.35);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
-        }
-
-        body.light-mode .resume-container::before {
-            opacity: 0.15;
-        }
-
-        body.light-mode .name,
-        body.light-mode .title,
-        body.light-mode .subtitle,
-        body.light-mode .section-title,
-        body.light-mode .header-pill,
-        body.light-mode .contact-info span,
-        body.light-mode .contact-info a,
-        body.light-mode .metric-label,
-        body.light-mode .metric-value,
-        body.light-mode .executive-summary,
-        body.light-mode .qual-title,
-        body.light-mode .qual-text,
-        body.light-mode .job-title,
-        body.light-mode .job-company,
-        body.light-mode .job-meta,
-        body.light-mode .job-description li,
-        body.light-mode .usecase-title,
-        body.light-mode .usecase-text,
-        body.light-mode .info-label,
-        body.light-mode .info-value,
-        body.light-mode .badge,
-        body.light-mode .cert-item,
-        body.light-mode .footer {
-            color: #111827;
-        }
-
-        body.light-mode .header-pill {
-            background: #e5e7eb;
-            border-color: #cbd5f5;
-        }
-
-        body.light-mode .qual-card,
-        body.light-mode .usecase-card,
-        body.light-mode .metrics-highlight {
-            background: #f9fafb;
-            border-color: #e5e7eb;
-            box-shadow: none;
-        }
-
-        body.light-mode .metric-item {
-            background: #ffffff;
-            border-color: #d1d5db;
-        }
-
-        body.light-mode .badge,
-        body.light-mode .cert-item {
-            background: #ffffff;
-            border-color: #d1d5db;
-        }
-
-        body.light-mode .section-title {
-            background: none;
-            -webkit-background-clip: border-box;
-            color: #111827;
-        }
-
-        .header {
-            display: flex;
-            gap: 22px;
-            align-items: center;
-            margin-bottom: 22px;
-        }
-
-        .header-photo {
-            width: 115px;
-            height: 115px;
-            border-radius: 18px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: radial-gradient(circle at 0% 0%, #38bdf8, #a855f7 45%, #f97316 90%);
-            padding: 3px;
-            box-shadow:
-                0 0 0 1px rgba(15, 23, 42, 0.85),
-                0 18px 35px rgba(15, 23, 42, 0.9);
-        }
-
-        .header-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 14px;
-            display: block;
-        }
-
-        .header-info {
-            flex: 1;
-        }
-
-        .name {
-            margin: 0 0 4px;
-            font-size: 30px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #f9fafb;
-        }
-
-        .title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #e5e7eb;
-            margin-bottom: 4px;
-        }
-
-        .subtitle {
-            font-size: 15px;
-            font-weight: 500;
-            color: #a5b4fc;
-            margin-bottom: 8px;
-        }
-
-        .header-highlights {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .header-pill {
-            font-size: 14px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.6);
-            background: rgba(15, 23, 42, 0.9);
-            color: #e5e7eb;
-            white-space: nowrap;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 16px;
-            font-size: 14px;
-            color: var(--fg-muted);
-        }
-
-        .contact-info a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .section {
-            padding-top: 8px;
-            border-top: 1px solid rgba(148, 163, 184, 0.35);
-        }
-
-        .section:first-of-type {
-            border-top: none;
-            padding-top: 0;
-        }
-
-        .section-title {
-            font-size: 15px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            margin: 0 0 8px;
-            position: relative;
-            padding-left: 12px;
-            background: linear-gradient(90deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .section-title::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 16px;
-            border-radius: 999px;
-            background: linear-gradient(180deg, #38bdf8, #a855f7);
-        }
-
-        .executive-summary {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #e5e7eb;
-        }
-
-        .executive-summary p {
-            margin: 0 0 10px;
-        }
-
-        .metrics-highlight {
-            margin-top: 10px;
-            border-radius: 12px;
-            padding: 12px 14px;
-            background: linear-gradient(90deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.85));
-            border: 1px solid rgba(148, 163, 184, 0.45);
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.9);
-        }
-
-        .metrics-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .metric-item {
-            min-width: 135px;
-            padding: 7px 11px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.88);
-            border: 1px solid rgba(55, 65, 81, 0.9);
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            text-align: left;
-        }
-
-        .metric-value {
-            font-size: 17px;
-            font-weight: 700;
-            color: #e5e7eb;
-        }
-
-        .metric-label {
-            font-size: 13px;
-            color: #9ca3af;
-        }
-
-        .qualifications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 10px;
-        }
-
-        .qual-card {
-            padding: 10px 11px;
-            border-radius: 12px;
-            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.94));
-            border: 1px solid rgba(55, 65, 81, 0.95);
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.9);
-        }
-
-        .qual-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #e5e7eb;
-            margin-bottom: 4px;
-        }
-
-        .qual-text {
-            font-size: 14px;
-            color: #9ca3af;
-        }
-
-        .experience-item {
-            margin-bottom: 10px;
-        }
-
-        .job-header {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-bottom: 4px;
-        }
-
-        .job-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #e5e7eb;
-        }
-
-        .job-company {
-            font-size: 14px;
-            color: #d1d5db;
-        }
-
-        .job-meta {
-            font-size: 13px;
-            color: #9ca3af;
-        }
-
-        .job-description ul {
-            margin: 4px 0 0;
-            padding-left: 18px;
-            font-size: 14px;
-            color: #d1d5db;
-        }
-
-        .job-description li {
-            margin-bottom: 3px;
-        }
-
-        .job-description strong {
-            color: #e5e7eb;
-        }
-
-        /* Colored bullets for experience section */
-        .section-experience .job-description ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .section-experience .job-description li {
-            position: relative;
-            padding-left: 14px;
-        }
-
-        .section-experience .job-description li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #38bdf8;
-        }
-
-        .badge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .badge {
-            font-size: 13px;
-            padding: 4px 9px;
-            border-radius: 999px;
-            border: 1px solid var(--chip-border);
-            background: var(--chip-bg);
-            white-space: nowrap;
-        }
-
-        .badge-featured {
-            border-color: rgba(56, 189, 248, 0.85);
-            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.96));
-        }
-
-        .cert-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .cert-item {
-            font-size: 13px;
-            padding: 3px 8px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.65);
-            background: rgba(15, 23, 42, 0.9);
-        }
-
-        .info-item {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 3px;
-            font-size: 14px;
-        }
-
-        .info-label {
-            min-width: 90px;
-            font-weight: 600;
-            color: #d1d5db;
-        }
-
-        .info-value {
-            color: #e5e7eb;
-        }
-
-        /* Detection & UEBA Use Cases as cards */
-        .section-ueba .usecase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 10px;
-        }
-
-        .usecase-card {
-            padding: 10px 11px;
-            border-radius: 12px;
-            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.95));
-            border: 1px solid rgba(55, 65, 81, 0.95);
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.9);
-        }
-
-        .usecase-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #e5e7eb;
-            margin-bottom: 4px;
-        }
-
-        .usecase-text {
-            font-size: 14px;
-            color: #9ca3af;
-        }
-
-        .footer {
-            margin-top: 14px;
-            font-size: 12px;
-            color: #6b7280;
-            text-align: center;
-        }
-
-        @media (max-width: 720px) {
-            body {
-                padding: 12px 6px;
-            }
-
-            .resume-container {
-                padding: 20px 16px 22px;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .header-photo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .name {
-                font-size: 26px;
-            }
-        }
-
-        /* ═══════════════════════════════════════════════════════════
-           PRINT STYLES - Optimized for 4+ page PDF output
-           Page 1: Header + Executive Summary + Core Qualifications
-           Page 2-3: Professional Experience
-           Page 4+: UEBA Use Cases, Technical Expertise, Certs, Education
-           ═══════════════════════════════════════════════════════════ */
-        @media print {
-            /* Base reset for print */
-            body {
-                background: #ffffff;
-                padding: 0;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
-
-            /* Hide UI buttons */
-            .print-button,
-            .theme-toggle-btn {
-                display: none !important;
-            }
-
-            /* Container reset */
-            .resume-container {
-                max-width: 100%;
-                margin: 0;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
-                background: #ffffff;
-                color: #111827;
-                padding: 10px 16px 14px;
-                animation: none;
-            }
-
-            .resume-container::before {
-                display: none;
-            }
-
-            /* Tighten content gap for print */
-            .content {
-                gap: 10px;
-            }
-
-            .section {
-                padding-top: 6px;
-            }
-
-            /* ─────────────────────────────────────────────────────────
-               PAGE 1: Header + Executive Summary + Core Qualifications
-               Expanded to fill the page
-               ───────────────────────────────────────────────────────── */
-            
-            /* Sections on page 1 get more breathing room */
-            .section:first-of-type,
-            .section:nth-of-type(2) {
-                padding-top: 12px;
-                margin-bottom: 10px;
-            }
-
-            .header {
-                margin-bottom: 18px;
-                gap: 18px;
-            }
-
-            .header-photo {
-                width: 95px;
-                height: 95px;
-            }
-
-            .name {
-                font-size: 24pt;
-                margin-bottom: 4px;
-            }
-
-            .title {
-                font-size: 13pt;
-                margin-bottom: 3px;
-            }
-
-            .subtitle {
-                font-size: 11pt;
-                margin-bottom: 8px;
-            }
-
-            .header-highlights {
-                gap: 8px;
-                margin-bottom: 8px;
-            }
-
-            .header-pill {
-                font-size: 10pt;
-                padding: 4px 10px;
-            }
-
-            .contact-info {
-                font-size: 10pt;
-                gap: 8px 16px;
-            }
-
-            /* Executive Summary: breathing room */
-            .executive-summary {
-                font-size: 11pt;
-                line-height: 1.55;
-            }
-
-            .executive-summary p {
-                margin: 0 0 12px;
-            }
-
-            .metrics-highlight {
-                margin-top: 14px;
-                padding: 14px 16px;
-                border-radius: 10px;
-            }
-
-            .metrics-row {
-                gap: 12px;
-            }
-
-            .metric-item {
-                min-width: 130px;
-                padding: 8px 12px;
-                border-radius: 8px;
-            }
-
-            .metric-value {
-                font-size: 14pt;
-            }
-
-            .metric-label {
-                font-size: 9pt;
-            }
-
-            /* Section titles */
-            .section-title {
-                font-size: 11pt;
-                margin-bottom: 10px;
-                color: #111827;
-                background: none;
-                -webkit-background-clip: border-box;
-            }
-
-            /* CORE QUALIFICATIONS: 3-column, expanded padding */
-            .qualifications-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-
-            .qual-card {
-                padding: 10px 12px;
-                border-radius: 8px;
-                background: #f9fafb;
-                border: 1px solid #e5e7eb;
-                box-shadow: none;
-            }
-
-            .qual-title {
-                font-size: 10pt;
-                font-weight: 600;
-                color: #111827;
-                margin-bottom: 4px;
-            }
-
-            .qual-text {
-                font-size: 9pt;
-                color: #374151;
-                line-height: 1.45;
-            }
-
-            /* Force page break BEFORE Professional Experience */
-            .section-experience {
-                page-break-before: always;
-            }
-
-            /* Experience section */
-            .experience-item {
-                margin-bottom: 8px;
-            }
-
-            .job-header {
-                margin-bottom: 3px;
-            }
-
-            .job-title {
-                font-size: 11pt;
-                color: #111827;
-            }
-
-            .job-company {
-                font-size: 10pt;
-                color: #374151;
-            }
-
-            .job-meta {
-                font-size: 9pt;
-                color: #6b7280;
-            }
-
-            .job-description ul {
-                margin: 3px 0 0;
-                font-size: 9pt;
-            }
-
-            .job-description li {
-                margin-bottom: 2px;
-                color: #374151;
-            }
-
-            /* ─────────────────────────────────────────────────────────
-               PAGE 3+: UEBA Use Cases, Technical Expertise, Certs, Education
-               Expanded to fill the page
-               ───────────────────────────────────────────────────────── */
-
-            /* Force page break BEFORE UEBA Use Cases */
-            .section-ueba {
-                page-break-before: always;
-            }
-
-            /* Add spacing between sections on page 3+ */
-            .section-ueba,
-            .section-ueba ~ .section {
-                padding-top: 14px;
-                margin-bottom: 8px;
-            }
-
-            /* UEBA Use Cases: 3-column grid, expanded */
-            .section-ueba .usecase-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-
-            .usecase-card {
-                padding: 12px 14px;
-                border-radius: 8px;
-                background: #f9fafb;
-                border: 1px solid #e5e7eb;
-                box-shadow: none;
-            }
-
-            .usecase-title {
-                font-size: 10pt;
-                font-weight: 600;
-                color: #111827;
-                margin-bottom: 5px;
-            }
-
-            .usecase-text {
-                font-size: 9pt;
-                color: #374151;
-                line-height: 1.5;
-            }
-
-            /* Technical Expertise badges: expanded */
-            .badge-container {
-                gap: 8px;
-            }
-
-            .badge {
-                font-size: 9pt;
-                padding: 5px 10px;
-                border-color: #9ca3af;
-                background: #ffffff;
-                color: #111827;
-            }
-
-            .badge-featured {
-                border-color: #6b7280;
-                font-weight: 600;
-            }
-
-            /* Certifications: expanded */
-            .cert-grid {
-                gap: 8px;
-            }
-
-            .cert-item {
-                font-size: 9pt;
-                padding: 5px 10px;
-                border-color: #9ca3af;
-                background: #ffffff;
-                color: #111827;
-            }
-
-            /* Education & Additional Info: expanded */
-            .info-item {
-                font-size: 10pt;
-                margin-bottom: 6px;
-            }
-
-            .info-label {
-                min-width: 85px;
-                color: #374151;
-            }
-
-            .info-value {
-                color: #111827;
-            }
-
-            /* Footer */
-            .footer {
-                margin-top: 16px;
-                font-size: 9pt;
-                color: #6b7280;
-            }
-
-            /* Links */
-            a {
-                color: inherit;
-                text-decoration: none;
-            }
-
-            /* Prevent orphaned content */
-            .section,
-            .experience-item,
-            .usecase-card,
-            .qual-card {
-                page-break-inside: avoid;
-            }
-
-            /* Keep job header with its bullets */
-            .job-header {
-                page-break-after: avoid;
-            }
-        }
-    
-        /* ═══════════════════════════════════════════════════════════
-           PROFESSIONAL TIMELINE — compact 3-column row layout
-           Each row: [date/duration] [dot] [role/company/location]
-           ═══════════════════════════════════════════════════════════ */
-
-        .timeline-grid {
-            display: flex;
-            flex-direction: column;
-            /* Thin vertical connector line running through all dots */
-            position: relative;
-        }
-
-        /* The vertical spine line connecting all dots */
-        .timeline-grid::before {
-            content: "";
-            position: absolute;
-            left: 118px;           /* aligns with center of .tl-dot */
-            top: 8px;
-            bottom: 8px;
-            width: 1px;
-            background: linear-gradient(180deg, #38bdf8 0%, #a855f7 60%, #f97316 100%);
-            opacity: 0.45;
-        }
-
-        /* One row per job */
-        .tl-item {
-            display: grid;
-            grid-template-columns: 112px 16px 1fr;  /* date | dot | content */
-            align-items: start;
-            gap: 0 8px;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .tl-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Left: date stack */
-        .tl-left {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            padding-top: 2px;
-            gap: 1px;
-        }
-
-        .tl-date {
-            font-size: 11px;
-            color: #9ca3af;
-            white-space: nowrap;
-            text-align: right;
-        }
-
-        /* Duration badge — small pill */
-        .tl-dur {
-            font-size: 10px;
-            font-weight: 700;
-            color: #38bdf8;
-            text-align: right;
-            letter-spacing: 0.03em;
-        }
-
-        /* Center: the dot on the spine */
-        .tl-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #38bdf8;
-            border: 1.5px solid #0b1120;
-            box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
-            margin-top: 4px;
-            justify-self: center;
-            flex-shrink: 0;
-        }
-
-        /* Right: role, company, location */
-        .tl-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            padding-top: 1px;
-        }
-
-        .tl-role {
-            font-size: 12px;
-            font-weight: 600;
-            color: #e5e7eb;
-            line-height: 1.3;
-        }
-
-        .tl-company {
-            font-size: 11.5px;
-            color: #d1d5db;
-        }
-
-        .tl-loc {
-            font-size: 10.5px;
-            color: #6b7280;
-            font-style: italic;
-        }
-
-        /* ── Light mode overrides for timeline ── */
-        body.light-mode .tl-date       { color: #374151; }
-        body.light-mode .tl-dur        { color: #2563eb; }
-        body.light-mode .tl-role       { color: #111827; }
-        body.light-mode .tl-company    { color: #374151; }
-        body.light-mode .tl-loc        { color: #6b7280; }
-        body.light-mode .tl-dot        { background: #2563eb; border-color: #ffffff; box-shadow: none; }
-        body.light-mode .timeline-grid::before { opacity: 0.25; }
-        body.light-mode .tl-item       { border-bottom-color: rgba(0,0,0,0.08); }
-
-        /* ── Print styles for timeline ── */
-        @media print {
-            .timeline-grid::before {
-                background: #9ca3af;
-                opacity: 0.5;
-            }
-            .tl-item        { padding: 3px 0; border-bottom-color: rgba(0,0,0,0.07); }
-            .tl-date        { font-size: 8pt; color: #6b7280; }
-            .tl-dur         { font-size: 8pt; color: #2563eb; }
-            .tl-role        { font-size: 9pt; color: #111827; }
-            .tl-company     { font-size: 8.5pt; color: #374151; }
-            .tl-loc         { font-size: 8pt; color: #6b7280; }
-            .tl-dot         { background: #374151; box-shadow: none; border-color: #ffffff; }
-        }
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julio Martinez — NDR & Network Security Monitoring Engineer</title>
+  <meta name="description" content="Julio Martinez — Principal Cybersecurity Engineer specializing in Network Detection & Response (NDR): Corelight, Zeek, Suricata, NetFlow, PCAP, Grafana, Prometheus, InfluxDB." />
+
+  <!-- Distinctive type system: Chakra Petch (cyber display) + IBM Plex Sans (body) + IBM Plex Mono (telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================================
+       1. THEME TOKENS  (all colors are CSS variables so the toggle is instant)
+       ========================================================================= */
+    :root,
+    [data-theme="dark"] {
+      --bg:        #080b11;   /* deepest ink (page)            */
+      --bg-2:      #0d131c;   /* panel background              */
+      --bg-3:      #121b27;   /* raised panel / chips          */
+      --line:      rgba(0, 229, 255, 0.14);   /* hairline borders */
+      --line-soft: rgba(255, 255, 255, 0.06);
+      --text:      #d8e4ef;   /* primary text                  */
+      --text-dim:  #8499ac;   /* secondary / labels            */
+      --text-mute: #5f7185;   /* tertiary                      */
+      --cyan:      #00e5ff;   /* primary accent (signal)       */
+      --green:     #3effb0;   /* secondary accent (healthy)    */
+      --amber:     #ffb454;   /* warning accent (used sparingly)*/
+      --grad:      linear-gradient(100deg, var(--cyan), var(--green));
+      --shadow:    0 18px 50px rgba(0, 0, 0, 0.55);
+      --glow:      0 0 18px rgba(0, 229, 255, 0.25);
+    }
+
+    /* Light theme overrides — ink-on-paper, calmer accents for readability */
+    [data-theme="light"] {
+      --bg:        #eef2f6;
+      --bg-2:      #ffffff;
+      --bg-3:      #f3f7fb;
+      --line:      rgba(0, 120, 150, 0.18);
+      --line-soft: rgba(10, 22, 32, 0.08);
+      --text:      #0f1620;
+      --text-dim:  #46586a;
+      --text-mute: #6c7d8e;
+      --cyan:      #0090b5;
+      --green:     #0a9e6e;
+      --amber:     #b5730a;
+      --grad:      linear-gradient(100deg, var(--cyan), var(--green));
+      --shadow:    0 14px 40px rgba(20, 40, 60, 0.10);
+      --glow:      0 0 0 transparent;
+    }
+
+    /* =========================================================================
+       2. RESET + BASE
+       ========================================================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      line-height: 1.55;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* Animated "telemetry grid" backdrop — pure CSS, disabled in print/light */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 35%, transparent 80%);
+      opacity: 0.6;
+    }
+
+    /* =========================================================================
+       3. LAYOUT SHELL
+       ========================================================================= */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    /* Section card — the recurring "console panel" container */
+    .panel {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 28px 30px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Thin accent bar that runs along the top edge of each panel */
+    .panel::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0.7;
+    }
+
+    /* Section heading: monospace "tag" + title, like a console label */
+    .section-title {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .section-title .tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--bg);
+      background: var(--grad);
+      padding: 4px 9px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .section-title .rule {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* =========================================================================
+       4. TOP CONTROL BAR (theme toggle + PDF) — hidden when printing
+       ========================================================================= */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 14px 32px 0;
+    }
+    .btn {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      background: var(--bg-3);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: var(--glow);
+      transform: translateY(-1px);
+    }
+    .btn--primary {
+      background: var(--grad);
+      color: #04121a;
+      border-color: transparent;
+    }
+    .btn--primary:hover { color: #04121a; filter: brightness(1.08); }
+
+    /* =========================================================================
+       5. HEADER / IDENTITY BLOCK
+       ========================================================================= */
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .hero__photo {
+      width: 132px;
+      height: 132px;
+      border-radius: 14px;
+      object-fit: cover;
+      border: 2px solid var(--line);
+      box-shadow: var(--glow);
+    }
+    .hero__name {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 2.55rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero__role {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      margin: 8px 0 14px;
+      letter-spacing: 0.02em;
+    }
+    .hero__role b { color: var(--cyan); font-weight: 600; }
+
+    /* Quick credential chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .chip {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      background: var(--bg-3);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 4px 11px;
+    }
+    .chip b { color: var(--green); font-weight: 600; }
+
+    /* Contact line */
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+    .contact a { color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+    .contact a:hover { color: var(--cyan); }
+    .contact span.k { color: var(--cyan); }
+
+    /* =========================================================================
+       6. METRICS STRIP
+       ========================================================================= */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .metric {
+      background: var(--bg-3);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .metric__val {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+    }
+    .metric__lbl {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-top: 7px;
+    }
+
+    /* =========================================================================
+       7. GENERIC CONTENT TYPOGRAPHY
+       ========================================================================= */
+    p.lead { color: var(--text-dim); margin-bottom: 12px; }
+    p.lead b, .summary b { color: var(--text); font-weight: 600; }
+    .summary { color: var(--text-dim); }
+    .summary + .summary { margin-top: 12px; }
+
+    /* Two-column capability grid */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 26px;
+    }
+    .cap h4 {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--cyan);
+      margin-bottom: 5px;
+      letter-spacing: 0.02em;
+    }
+    .cap p { color: var(--text-dim); font-size: 0.88rem; }
+
+    /* =========================================================================
+       8. FLAGSHIP LAB CALLOUT  (the centerpiece for this role)
+       ========================================================================= */
+    .lab {
+      border: 1px solid var(--cyan);
+      box-shadow: var(--glow), var(--shadow);
+    }
+    .lab .section-title .tag { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+    .lab__intro { color: var(--text-dim); margin-bottom: 18px; }
+    .lab__intro b { color: var(--text); }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .stack span {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--grad);
+      padding: 5px 11px;
+      border-radius: 6px;
+    }
+
+    .lab-feats { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; }
+    .lab-feats li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+    }
+    .lab-feats li::before {
+      content: "▸";
+      position: absolute; left: 0;
+      color: var(--green);
+      font-size: 0.9rem;
+    }
+    .lab-feats b { color: var(--text); font-weight: 600; }
+
+    /* =========================================================================
+       9. EXPERIENCE
+       ========================================================================= */
+    .job { margin-bottom: 26px; }
+    .job:last-child { margin-bottom: 0; }
+    .job__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; }
+    .job__title {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .job__org { color: var(--cyan); font-weight: 600; font-size: 0.9rem; }
+    .job__meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--text-mute);
+      white-space: nowrap;
+    }
+    .job ul { list-style: none; margin-top: 10px; }
+    .job li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 7px;
+      color: var(--text-dim);
+      font-size: 0.89rem;
+    }
+    .job li::before {
+      content: "";
+      position: absolute; left: 2px; top: 9px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+    .job li b { color: var(--text); font-weight: 600; }
+
+    /* =========================================================================
+       10. TECH EXPERTISE TAG CLOUD (NDR-first ordering)
+       ========================================================================= */
+    .tech { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tech span {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      background: var(--bg-3);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 6px 11px;
+      transition: all 0.15s;
+    }
+    .tech span.hot {            /* highlight the JD-critical tools */
+      color: var(--bg);
+      background: var(--grad);
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .tech span:hover { border-color: var(--cyan); color: var(--cyan); }
+    .tech span.hot:hover { color: var(--bg); }
+
+    /* =========================================================================
+       11. CERTS + EDUCATION GRID
+       ========================================================================= */
+    .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 26px; }
+    .cert {
+      display: flex; align-items: center; gap: 9px;
+      color: var(--text-dim); font-size: 0.86rem;
+    }
+    .cert::before { content: "✓"; color: var(--green); font-weight: 700; }
+
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .info h4 {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-mute); margin-bottom: 6px;
+    }
+    .info p { color: var(--text-dim); font-size: 0.88rem; }
+    .info b { color: var(--text); }
+
+    /* =========================================================================
+       12. TIMELINE
+       ========================================================================= */
+    .timeline { position: relative; padding-left: 26px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 7px; top: 4px; bottom: 4px;
+      width: 2px; background: var(--line);
+    }
+    .tl-item { position: relative; margin-bottom: 16px; }
+    .tl-item::before {
+      content: ""; position: absolute; left: -23px; top: 5px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--cyan);
+    }
+    .tl-item .tl-date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem; color: var(--cyan); letter-spacing: 0.04em;
+    }
+    .tl-item .tl-role { font-weight: 600; color: var(--text); font-size: 0.9rem; }
+    .tl-item .tl-org { color: var(--text-dim); font-size: 0.82rem; }
+
+    /* =========================================================================
+       13. FOOTER
+       ========================================================================= */
+    .footer {
+      text-align: center;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--text-mute);
+      margin-top: 30px;
+    }
+
+    /* =========================================================================
+       14. PAGE-LOAD ANIMATION (staggered reveal)
+       ========================================================================= */
+    .reveal { opacity: 0; transform: translateY(14px); animation: rise 0.6s ease forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    /* =========================================================================
+       15. RESPONSIVE
+       ========================================================================= */
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .hero__name { font-size: 2rem; }
+      .contact { justify-content: center; }
+      .chips { justify-content: center; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .cap-grid, .lab-feats, .cert-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+      .page { padding: 24px 18px 60px; }
+      .controls { padding: 12px 18px 0; }
+    }
+
+    /* =========================================================================
+       16. PRINT / PDF  — force a clean, ATS-friendly, ink-on-paper layout.
+            window.print() -> "Save as PDF" yields SELECTABLE TEXT (good for ATS),
+            not a rasterized image. We strip the dark theme + decorative effects.
+       ========================================================================= */
+    @media print {
+      @page { size: A4; margin: 12mm; }
+
+      /* Force readable light palette regardless of active theme */
+      :root, [data-theme="dark"], [data-theme="light"] {
+        --bg: #ffffff; --bg-2: #ffffff; --bg-3: #f4f7fa;
+        --text: #111; --text-dim: #2b2b2b; --text-mute: #555;
+        --cyan: #0a7d9c; --green: #0a8f63;
+        --line: #cfd9e2; --line-soft: #e6ecf2;
+        --grad: linear-gradient(100deg, #0a7d9c, #0a8f63);
+        --shadow: none; --glow: none;
+      }
+      body { font-size: 10.4pt; }
+      body::before { display: none; }            /* kill grid backdrop */
+      .controls { display: none !important; }    /* hide buttons */
+      .reveal { opacity: 1 !important; transform: none !important; animation: none; }
+      .lab .section-title .tag { animation: none; }
+
+      .page { max-width: 100%; padding: 0; }
+      .panel {
+        box-shadow: none;
+        border: 1px solid var(--line);
+        page-break-inside: avoid;       /* keep panels intact across pages */
+        margin-bottom: 12px;
+        padding: 16px 18px;
+      }
+      .lab { box-shadow: none; border: 1.5px solid var(--cyan); }
+      .job { page-break-inside: avoid; }
+      .hero__name {                      /* gradient text -> solid for print */
+        -webkit-text-fill-color: #0a7d9c;
+        color: #0a7d9c;
+      }
+      a { color: #0a7d9c !important; text-decoration: none; }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Print button: auto-switches to light mode for clean PDF output -->
-    <button class="print-button" id="printBtn">
-        <span>🧾</span><span>Save as PDF</span>
+  <!-- ======================= CONTROL BAR ======================= -->
+  <div class="controls">
+    <button class="btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light / dark">
+      <span id="themeIcon">◐</span> <span id="themeTxt">LIGHT</span>
     </button>
-
-    <button class="theme-toggle-btn" id="themeToggleBtn">
-        <span>🌓</span><span>Light / Dark</span>
+    <button class="btn btn--primary" onclick="downloadPDF()" title="Save / download as PDF (forces light theme)">
+      ⬇ DOWNLOAD PDF
     </button>
+  </div>
 
-    <div class="resume-container">
-        <div class="resume-inner">
-            <header class="header">
-                <div class="header-photo">
-                    <a href="image_large.png" target="_blank">
-                        <img src="image_small.png" alt="Julio Martinez" />
-                    </a>
-                </div>
-                <div class="header-info">
-                    <h1 class="name">JULIO MARTINEZ</h1>
-                    <div class="title">Principal Engineer | Cybersecurity Architect</div>
-                    <div class="subtitle">15+ Years Cybersecurity Expertise | DoD / Federal / Enterprise / Health / Finance</div>
-                    <div class="header-highlights">
-                        <div class="header-pill">25+ Years IT Systems</div>
-                        <div class="header-pill">TS/SCI – (DoD)</div>
-                        <div class="header-pill">SIEM | Analytics | Observability | Telemetry | Automation SME</div>
-                    </div>
-                    <div class="contact-info">
-                        <span>📍 Tampa, FL</span>
-                        <span>✉️ Julio@exzlium.com</span>
-                        <span>🔗 <a href="https://www.linkedin.com/in/xbitium/" target="_blank" rel="noreferrer">linkedin.com/in/xbitium</a></span>                    </div>
-                </div>
-            </header>
+  <div class="page">
 
-            <main class="content">
-                <!-- EXECUTIVE SUMMARY -->
-                <section class="section">
-                    <h2 class="section-title">Executive Summary</h2>
-                    <div class="executive-summary">
-                        <p>
-                            Principal Cybersecurity Engineer and architect with 15+ years securing large-scale
-                            enterprise and government environments and deep hands-on expertise across SIEM, UEBA,
-                            XDR, and SOAR automation. Designs and operationalizes end-to-end security solutions that measurably
-                            reduce attack surface and elevate detection maturity—from strategic gap analysis and roadmap
-                            definition through deployment, optimization, and executive reporting.
-                        </p>
-                        <p>
-                            Leads complex SIEM and cyber tools migrations, builds resilient telemetry platforms, and delivers
-                            high-fidelity detections and automations for SOC operations. Strong expertise with Palo Alto
-                            Networks XSIAM and XSOAR, including advanced SOAR playbook engineering, Python-based
-                            automation, and integrated runbooks across SIEM, SOAR, EDR/XDR, and other security tools to
-                            standardize incident handling and reduce MTTR. Experienced in building custom security
-                            solutions, APIs, webhooks, and dashboards using Python, Flask, Node.js, JavaScript, React,
-                            Grafana, Kibana, and Power BI with cloud-native integrations.
-                        </p>
+    <!-- ======================= HERO / IDENTITY ======================= -->
+    <header class="panel reveal" style="animation-delay:.02s">
+      <div class="hero">
+        <img class="hero__photo" src="https://xbitium.github.io/image_small.png" alt="Julio Martinez" />
+        <div>
+          <h1 class="hero__name">JULIO MARTINEZ</h1>
+          <p class="hero__role">
+            <b>Network Detection &amp; Response</b> Engineer &nbsp;//&nbsp; NSM &middot; Threat Detection &middot; Security Observability
+          </p>
 
-                        <div class="metrics-highlight">
-                            <div class="metrics-row">
-                                <div class="metric-item">
-                                    <span class="metric-value">10+</span>
-                                    <span class="metric-label">Years SIEM / UEBA Focus</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">12TB/day</span>
-                                    <span class="metric-label">Enterprise SIEM Scale</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">40%</span>
-                                    <span class="metric-label">MTTR Reduction Delivered</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">50%</span>
-                                    <span class="metric-label">False Positive Reduction</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">150k+</span>
-                                    <span class="metric-label">EPS at Peak Ingest</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">50+</span>
-                                    <span class="metric-label">Analysts &amp; Engineers Led</span>
-                                </div>
-                                <div class="metric-item">
-                                    <span class="metric-value">Python</span>
-                                    <span class="metric-label">Automation, APIs &amp; Tooling</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+          <!-- Quick-scan credibility chips -->
+          <div class="chips">
+            <span class="chip"><b>15+</b> yrs cybersecurity</span>
+            <span class="chip"><b>25+</b> yrs IT / networking</span>
+            <span class="chip"><b>TS/SCI</b> (DoD)</span>
+            <span class="chip">DoD &middot; Federal &middot; Enterprise &middot; Health &middot; Finance</span>
+          </div>
 
-                <!-- CORE QUALIFICATIONS & KEY CAPABILITIES -->
-                <section class="section">
-                    <h2 class="section-title">Core Qualifications &amp; Key Capabilities</h2>
-                    <div class="qualifications-grid">
-                        <div class="qual-card">
-                            <div class="qual-title">Enterprise Telemetry Integration</div>
-                            <div class="qual-text">
-                                Onboard identity, VPN, firewall, IDS/IPS, EDR/XDR, DLP, proxy, CASB, SaaS, and cloud
-                                telemetry into SIEM/XSIAM platforms. Integrate SailPoint IGA, CyberArk/Delinea PAM,
-                                Okta/Entra ID SSO, HR systems, and asset inventories into normalized security data models.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Security Analytics, SIEM &amp; UEBA Engineering</div>
-                            <div class="qual-text">
-                                Architect and tune SIEM deployments (XSIAM, Splunk, QRadar, ArcSight, Elastic, Datadog,
-                                Graylog, Exabeam) with enriched data models, risk scoring, behavioral analytics, and
-                                MITRE ATT&amp;CK-aligned detections, UEBA, and automated triage/playbook execution for SOC
-                                teams.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">SOAR, XSOAR &amp; Automation Engineering</div>
-                            <div class="qual-text">
-                                Design and implement automation using Cortex XSOAR and SIEM-native SOAR modules, translating
-                                SOC runbooks into codified playbooks that orchestrate enrichment, triage, containment,
-                                notifications, and ticketing. Use Python and APIs to integrate tools and continuously tune
-                                for reduced MTTR and higher fidelity.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Dashboards, Portals &amp; Web Apps</div>
-                            <div class="qual-text">
-                                Develop operational dashboards and portals using Flask, Node.js, JavaScript, and React;
-                                integrate SIEM and XDR data into Grafana, Kibana, and Power BI to provide SOC, IR, and
-                                executive stakeholders with real-time, drill-down visibility across cloud and on-prem.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Zero Trust, Cloud &amp; Network Security</div>
-                            <div class="qual-text">
-                                Deliver Zero Trust network security including NAC, micro-segmentation, NDR, VPN/SD-WAN, secure
-                                web gateways, and cloud firewalls; implement CASB controls and cloud posture management; lead
-                                IL5 ATO packages and integrate DNS security and cloud gateway policies for DoD SRG compliance.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Identity, Endpoint &amp; Data Protection</div>
-                            <div class="qual-text">
-                                Implement SSO/MFA and delegated auth with Azure AD and Ping; deliver SailPoint IGA, CyberArk
-                                and Delinea PAM; operationalize Cortex XDR, Carbon Black, Trellix, and Tychon; deploy Trellix
-                                DLP and Varonis to secure sensitive data and prevent exfiltration across email, web, and
-                                collaboration platforms.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Infrastructure-as-Code &amp; Ansible Automation</div>
-                            <div class="qual-text">
-                                Use Ansible playbooks and roles to standardize Linux hardening, SIEM/SOAR node builds, content
-                                deployment, and configuration drift control across lab and enterprise environments.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Platform Reliability &amp; Operations</div>
-                            <div class="qual-text">
-                                Maintain highly available SIEM, XDR, and SOAR platforms through automated patching,
-                                upgrade runbooks, health monitoring, and rollback strategies that minimize downtime
-                                and protect mission-critical logging pipelines.
-                            </div>
-                        </div>
-
-                        <div class="qual-card">
-                            <div class="qual-title">Detection Engineering &amp; Content Lifecycle</div>
-                            <div class="qual-text">
-                                Implement detection-as-code workflows with GitHub, CI/CD, and IaC-style patterns to manage
-                                rule versions, testing, promotion, rollback, and quality gates for correlation, UEBA, and
-                                SOAR playbooks.
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PROFESSIONAL EXPERIENCE -->
-                <section class="section section-experience">
-                    <h2 class="section-title">Professional Experience</h2>
-
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div class="job-title">Principal Cybersecurity Engineer / Co-Founder</div>
-                            <div class="job-company">Xbitium Technologies</div>
-                            <div class="job-meta">Feb 2025 – Present | Tampa, FL</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Architect and deploy Cortex XSIAM and XDR platforms end-to-end — onboarding telemetry sources, building XQL detections, configuring BIOC rules, and operationalizing threat intel for enterprise and DoD clients.</li>
-                                <li>Engineer advanced Cortex XSOAR playbooks in Python — automating alert triage, enrichment, containment, ticketing, and cross-tool orchestration across XDR, SIEM, identity, and ticketing systems.</li>
-                                <li>Develop Python microservices and REST APIs (FastAPI/Flask) for telemetry ingestion pipelines, real-time KPI dashboards, webhook integrations, and automated reporting workflows.</li>
-                                <li>Build Python-based XSOAR automation scripts, custom integrations, and API connectors bridging XSIAM, XDR, and third-party security tools with zero manual handoff.</li>
-                                <li>Implement Detection-as-Code using GitHub Actions — automated testing, versioning, promotion, and rollback of XQL/XSIAM correlation rules and XSOAR playbooks across environments.</li>
-                                <li>Design and operationalize XSOAR incident lifecycle workflows — from ingestion and deduplication through escalation, remediation, and post-incident reporting with full audit trail.</li>
-                                <li>Deliver Splunk ES integration touchpoints where needed — feeding normalized XDR and XSIAM telemetry into Splunk for cross-platform correlation and executive dashboards.</li>
-                                <li>Build Flask/JavaScript operational portals and Grafana dashboards surfacing live XSIAM, XDR, and automation metrics for SOC and leadership stakeholders.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div class="job-title">Sr. Cybersecurity Consultant &amp; Solutions Architect</div>
-                            <div class="job-company">Palo Alto Networks | RedMatter Solutions</div>
-                            <div class="job-meta">Oct 2023 – Feb 2025 | Tampa, FL / Arlington, VA (Remote)</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Architected and deployed Splunk Enterprise Security (ES) for FHFA — building data models, correlation searches, adaptive response actions, and risk-based alerting (RBA) aligned to MITRE ATT&amp;CK.</li>
-                                <li>Engineered Splunk ES notable event workflows end-to-end: use case authoring, triage automation, analyst queue management, and executive-ready reporting via custom dashboards.</li>
-                                <li>Built and tuned Cortex XSOAR playbooks (Python) to automate Splunk ES notable event response — enrichment via threat intel, VirusTotal, and identity APIs, with auto-ticketing and containment actions.</li>
-                                <li>Optimized Splunk ES performance at scale — SPL refactoring, summary index strategies, search head clustering tuning, and data model acceleration to reduce search runtime and licensing pressure.</li>
-                                <li>Delivered SPL authoring training and runbook documentation enabling SOC analysts to independently build searches, dashboards, and investigation workflows in Splunk ES.</li>
-                                <li>Designed XSOAR incident types, layouts, and playbook trees mapping existing SOC runbooks into fully automated Splunk ES → XSOAR response pipelines.</li>
-                                <li>Integrated STIX/TAXII/MISP threat intel feeds into Splunk ES and XSOAR for automated IoC enrichment, threat scoring, and hunting across ingested telemetry.</li>
-                                <li>Provided Tier 3 Splunk engineering support — parser/TA development, CIM normalization, ingestion pipeline hardening, and coordinated global content release windows.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div class="job-title">Lead Cybersecurity Engineer &amp; Architect</div>
-                            <div class="job-company">GDIT / Crystal Clear Technologies – U.S. CENTCOM HQ</div>
-                            <div class="job-meta">May 2017 – Sep 2023 | MacDill AFB, Tampa, FL</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Architected and operated enterprise Splunk ES deployment processing 12TB/day at 150k EPS across multi-domain DoD environments — managing indexer clusters, search head clusters, and heavy forwarders.</li>
-                                <li>Built Splunk ES correlation searches, risk-based alerting (RBA), data model accelerations, and CIM-normalized TAs for firewall, EDR, identity, NDR, and cloud telemetry sources.</li>
-                                <li>Achieved 40% MTTR reduction and 25% false-positive drop through Splunk UEBA tuning, risk scoring models, and behavioral baseline correlation aligned to MITRE ATT&amp;CK.</li>
-                                <li>Engineered Splunk ingestion pipelines with Kafka, Cribl, and NiFi — DLQs, backpressure handling, replay, and schema governance ensuring zero data loss at DoD scale.</li>
-                                <li>Developed Splunk dashboards and SOC operational portals for real-time incident visibility, executive KPI reporting, and cross-enclave threat hunting across coalition networks.</li>
-                                <li>Implemented Zero Trust with ForeScout NAC providing 98% device visibility; integrated NAC posture data into Splunk ES for continuous compliance correlation and alerting.</li>
-                                <li>Used Ansible to automate Splunk node builds, TA deployments, and index configuration across classified and unclassified enclaves, eliminating manual drift.</li>
-                                <li>Led ATO processes and Forcepoint CDS deployments across 12 classified domains, aligning Splunk logging controls with DoD SRG and RMF requirements.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div class="job-title">Lead SIEM Engineer &amp; Architect</div>
-                            <div class="job-company">(HHS, Protiviti &amp; Deloitte consulting, AT&amp;T, DTRA, DISA)</div>
-                            <div class="job-meta">2009 – 2017 | Multiple Locations</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Led enterprise Splunk ES deployment for HHS CSIRC (CDC, FDA, NIH, IHS) — high-availability indexer/search head architecture with multi-source CIM-normalized telemetry and HIPAA-aligned correlation.</li>
-                                <li>Built greenfield Splunk ES programs for Fortune 500 clients at Protiviti — data onboarding, TA development, correlation content, and SOC analyst training from zero to operational.</li>
-                                <li>Architected and migrated DISA-Europe ArcSight SIEM to Splunk ES at Deloitte — designing theater-wide deployment spanning USCENTCOM AORs (Kuwait, Afghanistan, Iraq, Bahrain, Qatar).</li>
-                                <li>Delivered Splunk ES advanced use cases for insider threat, privilege abuse, and lateral movement with risk-based scoring, adaptive response, and RMF-aligned audit reporting.</li>
-                                <li>Led 24×7 NOSC/SOC operations for DTRA — managing 12 network engineers and 12 cyber analysts with Splunk as the primary detection and triage platform alongside SolarWinds and IPS tools.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div class="job-title">Network &amp; Systems Engineer (Early Career)</div>
-                            <div class="job-company">U.S. Air Force &amp; Consulting</div>
-                            <div class="job-meta">2002 – 2009 | Multiple Locations</div>
-                        </div>
-                        <div class="job-description">
-                            <ul>
-                                <li>Served in U.S. Air Force communications and network roles, supporting secure voice and data networks across multiple security domains.</li>
-                                <li>Installed, configured, and hardened routers, switches, firewalls, and Windows/Linux servers supporting base and mission operations.</li>
-                                <li>Implemented patching, antivirus, backup, and monitoring baselines, reducing incidents and aligning with STIG requirements.</li>
-                                <li>Provided consulting and implementation services for businesses, designing LAN/WAN, Wi-Fi, and perimeter security and modernizing legacy infrastructure.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- DETECTION / UEBA USE CASE PORTFOLIO -->
-                <section class="section section-ueba">
-                    <h2 class="section-title">Detection &amp; UEBA Use Cases</h2>
-                    <div class="usecase-grid">
-                        <div class="usecase-card">
-                            <div class="usecase-title">Privileged Account &amp; Admin Misuse</div>
-                            <div class="usecase-text">
-                                Detect after-hours admin activity, high-volume command execution, privilege escalation,
-                                and access to sensitive systems outside normal behavior profiles.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">Authentication &amp; MFA Anomalies</div>
-                            <div class="usecase-text">
-                                Identify unusual login patterns including first-time access to sensitive apps, risky
-                                geolocations, impossible travel, and MFA fatigue/push bombing behavior.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">Data Exfiltration &amp; Insider Threat</div>
-                            <div class="usecase-text">
-                                Monitor abnormal download volumes, unusual file/database access, DLP violations, and
-                                pre-termination mass access patterns to surface potential insider risk and exfiltration.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">SSH &amp; Remote Access Security</div>
-                            <div class="usecase-text">
-                                Correlate SSH failed logins, repeated failures (brute force), and successful logins by account,
-                                source IP, and time-of-day to flag suspicious or high-risk remote access.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">sudo &amp; Privilege Escalation Monitoring</div>
-                            <div class="usecase-text">
-                                Track <code>sudo</code> command execution, sessions without a real TTY, and repeated
-                                <code>sudo</code> use patterns as indicators of privilege escalation, misuse, or hands-on-keyboard activity.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">Account &amp; Group Management Changes</div>
-                            <div class="usecase-text">
-                                Alert on local user and group creation or modification events and correlate with asset
-                                sensitivity, time-of-day, and associated admin accounts to detect risky changes.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">Critical File Integrity Monitoring</div>
-                            <div class="usecase-text">
-                                Monitor modifications to <code>/etc/passwd</code>, <code>/etc/shadow</code>,
-                                <code>/etc/sudoers</code> and other critical system files, treating changes as high/critical
-                                risk for identity and privilege integrity.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">Service, Kernel &amp; Hardware Health</div>
-                            <div class="usecase-text">
-                                Detect repeated systemd unit failures, unexpected restarts of security services and agents,
-                                disk I/O and filesystem errors, out-of-memory events, and interface resets as early indicators
-                                of availability or attack impact.
-                            </div>
-                        </div>
-                        <div class="usecase-card">
-                            <div class="usecase-title">IDS &amp; YARA-Based Threat Detection</div>
-                            <div class="usecase-text">
-                                Design and tune IDS signatures and YARA rules for malware, tooling, and TTP-specific patterns,
-                                enabling custom alerting and higher-fidelity detections across Suricata/Snort and endpoint
-                                telemetry.
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TECHNICAL EXPERTISE -->
-                <section class="section">
-                    <h2 class="section-title">Technical Expertise</h2>
-                    <div class="badge-container">
-                        <span class="badge badge-featured">SIEM Platforms (Splunk, QRadar, ArcSight, Elastic, Datadog, Graylog, Exabeam, XSIAM)</span>
-                        <span class="badge badge-featured">UEBA Platforms (Exabeam, Securonix)</span>
-                        <span class="badge badge-featured">Palo Alto XSIAM / Cortex XDR</span>
-                        <span class="badge badge-featured">Cortex XSOAR &amp; SOAR Playbooks</span>
-
-                        <span class="badge">Kafka / Pulsar</span>
-                        <span class="badge">Cribl / Apache NiFi</span>
-                        <span class="badge">Python (Automation &amp; APIs)</span>
-                        <span class="badge">Ansible / Infrastructure-as-Code</span>
-                        <span class="badge">PowerShell / Bash / Linux Hardening</span>
-                        <span class="badge">Custom Security Tooling</span>
-                        <span class="badge">Node.js / JavaScript / React</span>
-                        <span class="badge">Flask / REST APIs / Webhooks</span>
-                        <span class="badge">Grafana / Kibana / Power BI</span>
-                        <span class="badge">GitHub / CI/CD (GitHub Actions)</span>
-                        <span class="badge">EDR / XDR (Cortex, Carbon Black, Trellix)</span>
-                        <span class="badge">SailPoint IGA</span>
-                        <span class="badge">CyberArk / Delinea PAM</span>
-                        <span class="badge">Okta / Azure AD</span>
-                        <span class="badge">ForeScout NAC</span>
-                        <span class="badge">Cisco Stealthwatch NDR</span>
-                        <span class="badge">NetFlow &amp; Flow Sensors</span>
-                        <span class="badge">Network Security Monitoring (NSM)</span>
-                        <span class="badge">Web Application Firewall (WAF)</span>
-                        <span class="badge">CASB &amp; SASE Architectures</span>
-                        <span class="badge">Trellix DLP</span>
-                        <span class="badge">Varonis DSP</span>
-                        <span class="badge">AWS / Azure Cloud Integrations</span>
-                        <span class="badge">MITRE ATT&amp;CK</span>
-                        <span class="badge">NIST CSF / RMF</span>
-                        <span class="badge">Zero Trust (ZTNA)</span>
-                    </div>
-                </section>
-
-                <!-- CERTIFICATIONS -->
-                <section class="section">
-                    <h2 class="section-title">Certifications</h2>
-                    <div class="cert-grid">
-                        <div class="cert-item">✓ EC-Council Certified Ethical Hacker (CEH)</div>
-                        <div class="cert-item">✓ GIAC Certified Incident Handler (GCIH)</div>
-                        <div class="cert-item">✓ CompTIA Security+</div>
-                        <div class="cert-item">✓ CompTIA Network+</div>
-                        <div class="cert-item">✓ CompTIA A+</div>
-                        <div class="cert-item">✓ Red Hat Certified System Administrator (RHCSA)</div>
-                        <div class="cert-item">✓ ArcSight Certified Administrator (ACIA)</div>
-                        <div class="cert-item">✓ ArcSight Certified Security Analyst (ACSA)</div>
-                        <div class="cert-item">✓ Cribl Certified User</div>
-                        <div class="cert-item">✓ Cribl Certified Services Consultant</div>
-                        <div class="cert-item">✓ Forcepoint Certified HS Guard Admin</div>
-                        <div class="cert-item">✓ Forescout Certified Associate (FSCA)</div>
-                    </div>
-                </section>
-
-                <!-- EDUCATION & ADDITIONAL INFORMATION -->
-                <section class="section">
-                    <h2 class="section-title">Education &amp; Additional Information</h2>
-                    <div class="info-item">
-                        <div class="info-label">Education</div>
-                        <div class="info-value">
-                            CCAF – Data/Voice Network Systems (Top Honors) | Electronics &amp; Communications (Honors)
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Clearance</div>
-                        <div class="info-value">
-                            U.S. Top Secret/SCI (DoD) – Active 23 years
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Languages</div>
-                        <div class="info-value">
-                            Bilingual English / Spanish
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Work Mode</div>
-                        <div class="info-value">
-                            Remote / Hybrid / On-site | Open to relocation
-                        </div>
-                    </div>
-                </section>
-            
-                <!-- ═══════════════════════════════════════════
-                     PROFESSIONAL TIMELINE
-                     Compact visual employment history — 
-                     date range | role | company | location
-                     ═══════════════════════════════════════════ -->
-                <section class="section section-timeline">
-                    <h2 class="section-title">Professional Timeline</h2>
-
-                    <!-- Tight 2-column grid: left = date+duration, right = role+company+location -->
-                    <div class="timeline-grid">
-
-                        <!-- ── 2025–Present ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Feb 2025 – Present</span>
-                                <span class="tl-dur">Present</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Principal Cybersecurity Engineer / Co-Founder</span>
-                                <span class="tl-company">Xbitium Technologies</span>
-                                <span class="tl-loc">Tampa, FL</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2023–2025 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Oct 2023 – Feb 2025</span>
-                                <span class="tl-dur">1.4 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Sr. Cybersecurity Consultant &amp; Solutions Architect</span>
-                                <span class="tl-company">Palo Alto Networks | RedMatter Solutions</span>
-                                <span class="tl-loc">Tampa, FL / Arlington, VA (Remote)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2017–2023 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">May 2017 – Sep 2023</span>
-                                <span class="tl-dur">6.3 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Lead Cybersecurity Engineer &amp; Architect</span>
-                                <span class="tl-company">GDIT / Crystal Clear Technologies – U.S. CENTCOM HQ</span>
-                                <span class="tl-loc">MacDill AFB, Tampa, FL</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2015–2017 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Nov 2015 – Apr 2017</span>
-                                <span class="tl-dur">1.5 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Lead Cybersecurity Engineer</span>
-                                <span class="tl-company">Merlin International (HHS CSIRC)</span>
-                                <span class="tl-loc">Atlanta, GA (Hybrid)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2014–2015 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Aug 2014 – Nov 2015</span>
-                                <span class="tl-dur">1.3 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Sr. Manager / SIEM SME</span>
-                                <span class="tl-company">Protiviti Inc. (Fortune 500 Clients)</span>
-                                <span class="tl-loc">Atlanta, GA (100% Travel)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2012–2014 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Apr 2012 – Aug 2014</span>
-                                <span class="tl-dur">2.3 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Sr. Manager / SIEM SME</span>
-                                <span class="tl-company">Deloitte &amp; Touche LLP (DISA Europe)</span>
-                                <span class="tl-loc">Stuttgart, Germany (On-site)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2011–2012 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Feb 2011 – Apr 2012</span>
-                                <span class="tl-dur">1.2 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Sr. Information Assurance Engineer</span>
-                                <span class="tl-company">AT&amp;T GSI (USCENTCOM)</span>
-                                <span class="tl-loc">Arifjan, Kuwait (On-site)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2009–2011 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Jan 2009 – Feb 2011</span>
-                                <span class="tl-dur">2 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">NOSC Manager / Network Engineer</span>
-                                <span class="tl-company">Defense Engineering Inc. (DTRA)</span>
-                                <span class="tl-loc">Arlington, VA (On-site)</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2006–2009 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Aug 2006 – Jan 2009</span>
-                                <span class="tl-dur">2.5 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Network Engineer</span>
-                                <span class="tl-company">Mutual Telecom Services</span>
-                                <span class="tl-loc">Multiple Locations</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2002–2006 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Aug 2002 – Aug 2006</span>
-                                <span class="tl-dur">4 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Network Specialist</span>
-                                <span class="tl-company">U.S. Air Force (Active Duty)</span>
-                                <span class="tl-loc">Ramstein, Germany</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 2001–2002 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Oct 2001 – Aug 2002</span>
-                                <span class="tl-dur">&lt;1 yr</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">Network Administrator</span>
-                                <span class="tl-company">WinVista Corporation</span>
-                                <span class="tl-loc">Fort Lauderdale, FL</span>
-                            </div>
-                        </div>
-
-                        <!-- ── 1998–2001 ── -->
-                        <div class="tl-item">
-                            <div class="tl-left">
-                                <span class="tl-date">Aug 1998 – Oct 2001</span>
-                                <span class="tl-dur">3.2 yrs</span>
-                            </div>
-                            <div class="tl-dot"></div>
-                            <div class="tl-right">
-                                <span class="tl-role">IT Support Specialist</span>
-                                <span class="tl-company">Miami-Dade County</span>
-                                <span class="tl-loc">Miami, FL</span>
-                            </div>
-                        </div>
-
-                    </div><!-- end .timeline-grid -->
-                </section><!-- end Professional Timeline -->
-
-            </main>
-
-            <footer class="footer">
-                © 2025 Julio Martinez | Principal Cybersecurity Engineer | Julio@exzlium.com
-            </footer>
+          <div class="contact">
+            <span><span class="k">LOC</span> Tampa, FL</span>
+            <a href="mailto:Julio@xbitium.com"><span class="k">MAIL</span> Julio@xbitium.com</a>
+            <a href="https://www.linkedin.com/in/xbitium/" target="_blank" rel="noopener"><span class="k">IN</span> linkedin.com/in/xbitium</a>
+            <a href="https://xbitium.com" target="_blank" rel="noopener"><span class="k">WEB</span> xbitium.com</a>
+          </div>
         </div>
-    </div>
+      </div>
+    </header>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        (function () {
-            const themeBtn = document.getElementById('themeToggleBtn');
-            const printBtn = document.getElementById('printBtn');
-            
-            // ─────────────────────────────────────────────────────────────
-            // Theme toggle: defaults to dark, remembers user preference
-            // ─────────────────────────────────────────────────────────────
-            function applyTheme(mode) {
-                if (mode === 'light') {
-                    document.body.classList.add('light-mode');
-                } else {
-                    document.body.classList.remove('light-mode');
-                }
-            }
+    <!-- ======================= EXECUTIVE SUMMARY ======================= -->
+    <section class="panel reveal" style="animation-delay:.08s">
+      <h2 class="section-title"><span class="tag">SUMMARY</span> Profile <span class="rule"></span></h2>
+      <p class="summary">
+        Principal Cybersecurity Engineer with <b>15+ years</b> securing large-scale enterprise and
+        federal networks, with deep hands-on focus on <b>Network Detection &amp; Response (NDR)</b> and
+        <b>Network Security Monitoring (NSM)</b>. Designs sensor-to-dashboard detection pipelines that turn raw
+        <b>PCAP and NetFlow</b> into high-fidelity, MITRE&nbsp;ATT&amp;CK-aligned detections — from packet
+        capture and protocol analysis through enrichment, alerting, and executive-ready visibility.
+      </p>
+      <p class="summary">
+        Production NSM/NDR experience deploying <b>Security Onion (Zeek + Suricata)</b> sensors and
+        <b>Gigamon</b> network taps across multi-classification environments — plus <b>Corelight</b> for
+        enterprise-grade network evidence and <b>Grafana, Prometheus, and InfluxDB</b> for time-series
+        telemetry and custom operational dashboards. Pairs that network depth with a
+        decade of SIEM/UEBA detection engineering (Splunk ES, XSIAM, Elastic) and SOAR automation, so
+        network findings flow seamlessly into SOC triage and response. Strong Python/API tooling for
+        ingestion pipelines, integrations, and dashboards across cloud and on-prem.
+      </p>
+    </section>
 
-            // Check localStorage for saved preference (default: dark)
-            let saved = null;
-            try {
-                saved = localStorage.getItem('resume-theme');
-            } catch (e) {}
+    <!-- ======================= METRICS ======================= -->
+    <section class="panel reveal" style="animation-delay:.12s">
+      <div class="metrics">
+        <div class="metric"><div class="metric__val">12&nbsp;TB/day</div><div class="metric__lbl">Telemetry ingest scale</div></div>
+        <div class="metric"><div class="metric__val">150k+&nbsp;EPS</div><div class="metric__lbl">Peak event throughput</div></div>
+        <div class="metric"><div class="metric__val">40%</div><div class="metric__lbl">MTTR reduction</div></div>
+        <div class="metric"><div class="metric__val">98%</div><div class="metric__lbl">Network device visibility</div></div>
+      </div>
+    </section>
 
-            // Only apply light if explicitly saved as light
-            if (saved === 'light') {
-                applyTheme('light');
-            }
+    <!-- ======================= FLAGSHIP NDR LAB (centerpiece) ======================= -->
+    <section class="panel lab reveal" style="animation-delay:.16s">
+      <h2 class="section-title"><span class="tag">● LIVE LAB</span> Network Detection &amp; Response Lab <span class="rule"></span></h2>
+      <p class="lab__intro">
+        Self-architected, full-stack <b>NDR lab</b> that extends my production NSM / Security Onion background
+        onto a modern open stack — the discipline of capturing, parsing, and detecting on live network evidence. Sensors tap a
+        mirrored/SPAN segment; <b>PCAP and NetFlow</b> are captured, parsed by <b>Zeek</b>, scored by
+        <b>Suricata</b>, and rendered into custom dashboards over a time-series observability backend.
+      </p>
 
-            // Toggle button handler
-            if (themeBtn) {
-                themeBtn.addEventListener('click', function () {
-                    const isLight = document.body.classList.toggle('light-mode');
-                    try {
-                        localStorage.setItem('resume-theme', isLight ? 'light' : 'dark');
-                    } catch (e) {}
-                });
-            }
+      <div class="stack">
+        <span>Corelight</span><span>Zeek</span><span>Suricata</span>
+        <span>PCAP</span><span>NetFlow / IPFIX</span>
+        <span>Grafana</span><span>Prometheus</span><span>InfluxDB</span>
+      </div>
 
-            // ─────────────────────────────────────────────────────────────
-            // Print/PDF: auto-switch to light mode for clean printing
-            // ─────────────────────────────────────────────────────────────
-            if (printBtn) {
-                printBtn.addEventListener('click', function () {
-                    // Remember current theme state
-                    const wasLight = document.body.classList.contains('light-mode');
-                    
-                    // Force light mode for PDF
-                    document.body.classList.add('light-mode');
-                    
-                    // Small delay to let styles apply, then print
-                    setTimeout(function () {
-                        window.print();
-        
-                        // Restore theme after print dialog closes
-                        setTimeout(function () {
-                            if (!wasLight) {
-                                document.body.classList.remove('light-mode');
-                            }
-                        }, 1000);
-                    }, 150);
-                });
-            }
-        })();
-    </script>
+      <ul class="lab-feats">
+        <li><b>Packet &amp; flow capture:</b> tap/SPAN ingestion of full PCAP plus NetFlow/IPFIX records for retrospective hunting and forensics.</li>
+        <li><b>Zeek / Corelight evidence:</b> protocol logs (conn, dns, http, ssl/tls, files, x509) as the structured backbone for detection.</li>
+        <li><b>Suricata detection:</b> signature + flow-based alerting, EVE JSON output, and custom rule tuning to cut false positives.</li>
+        <li><b>Time-series backend:</b> Prometheus + InfluxDB storing sensor health, flow volumes, and detection metrics.</li>
+        <li><b>Custom Grafana dashboards:</b> top talkers, protocol mix, beaconing/JA3 anomalies, alert trends, and sensor SLOs.</li>
+        <li><b>Detection engineering:</b> MITRE ATT&amp;CK-mapped network detections with Git-versioned rules and CI validation.</li>
+      </ul>
+    </section>
+
+    <!-- ======================= CORE CAPABILITIES (NDR-forward) ======================= -->
+    <section class="panel reveal" style="animation-delay:.20s">
+      <h2 class="section-title"><span class="tag">CAPABILITIES</span> Core Qualifications <span class="rule"></span></h2>
+      <div class="cap-grid">
+        <div class="cap">
+          <h4>Network Detection &amp; Response (NDR)</h4>
+          <p>Stand up and operate NDR sensors (Zeek/Corelight, Suricata, Security Onion, Cisco Stealthwatch) across mirrored and segmented networks; tune detections for east-west traffic, lateral movement, C2 beaconing, and exfiltration.</p>
+        </div>
+        <div class="cap">
+          <h4>Packet &amp; Flow Telemetry</h4>
+          <p>Engineer Gigamon TAP/packet-broker visibility and pipelines for full PCAP and NetFlow/IPFIX — including cross-domain (CDS) NetFlow delivery; protocol analysis (DNS, TLS/JA3, HTTP, SMB); retention, indexing, and replay for hunting and forensics.</p>
+        </div>
+        <div class="cap">
+          <h4>Security Observability Stack</h4>
+          <p>Operational dashboards and metrics with Grafana, Prometheus, and InfluxDB — sensor health, flow baselines, detection KPIs, and SLOs — plus Kibana and Power BI for executive reporting.</p>
+        </div>
+        <div class="cap">
+          <h4>Detection Engineering &amp; Content Lifecycle</h4>
+          <p>Detection-as-code with Git + CI/CD: authoring, testing, promotion, and rollback of Suricata rules, Zeek scripts, Sigma, YARA, and SIEM correlation content mapped to MITRE ATT&amp;CK.</p>
+        </div>
+        <div class="cap">
+          <h4>SIEM / UEBA Integration</h4>
+          <p>Feed normalized network evidence into Splunk ES, XSIAM, and Elastic for cross-source correlation, risk-based alerting, and behavioral analytics — bridging the network and SOC views.</p>
+        </div>
+        <div class="cap">
+          <h4>Automation, APIs &amp; Tooling</h4>
+          <p>Python/Flask/FastAPI services, REST APIs, and webhooks for ingestion, enrichment, and SOAR (Cortex XSOAR) orchestration; Ansible for sensor/node builds and configuration drift control.</p>
+        </div>
+        <div class="cap">
+          <h4>Zero Trust &amp; Network Security</h4>
+          <p>Micro-segmentation, NAC (ForeScout), VPN/SD-WAN, secure web gateways, and cloud firewalls; integrate posture and flow data into continuous monitoring and compliance.</p>
+        </div>
+        <div class="cap">
+          <h4>Platform Reliability &amp; IaC</h4>
+          <p>Highly available monitoring pipelines via automated patching, upgrade runbooks, health checks, and rollback strategies that protect mission-critical capture and logging paths.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PROFESSIONAL EXPERIENCE ======================= -->
+    <section class="panel reveal" style="animation-delay:.24s">
+      <h2 class="section-title"><span class="tag">EXPERIENCE</span> Professional Experience <span class="rule"></span></h2>
+
+      <!-- ---- Xbitium ---- -->
+      <div class="job">
+        <div class="job__head">
+          <div>
+            <span class="job__title">Principal Cybersecurity Engineer / Co-Founder</span>
+            &nbsp;&middot;&nbsp; <span class="job__org">Xbitium Technologies</span>
+          </div>
+          <span class="job__meta">Feb 2025 – Present &middot; Tampa, FL</span>
+        </div>
+        <ul>
+          <li>Architect and operate <b>NDR + NSM environments</b> — Zeek/Corelight, Suricata, and flow sensors — capturing PCAP and NetFlow and converting them into MITRE ATT&amp;CK-aligned network detections.</li>
+          <li>Build <b>custom Grafana dashboards</b> over Prometheus and InfluxDB for sensor health, flow baselines, protocol anomalies, and detection KPIs across client environments.</li>
+          <li>Engineer Python microservices and REST APIs (FastAPI/Flask) for <b>telemetry ingestion pipelines</b>, real-time KPI dashboards, webhook integrations, and automated reporting.</li>
+          <li>Author and tune <b>Suricata rules, Zeek scripts, Sigma, and YARA</b> under a detection-as-code workflow with GitHub Actions — automated testing, versioning, promotion, and rollback.</li>
+          <li>Integrate network evidence into <b>Cortex XSIAM/XDR and Splunk ES</b>, then automate triage, enrichment, and containment via Cortex XSOAR playbooks for zero manual handoff.</li>
+          <li>Design incident lifecycle workflows from ingestion and deduplication through escalation, remediation, and post-incident reporting with full audit trail.</li>
+        </ul>
+      </div>
+
+      <!-- ---- Palo Alto / RedMatter ---- -->
+      <div class="job">
+        <div class="job__head">
+          <div>
+            <span class="job__title">Sr. Cybersecurity Consultant &amp; Solutions Architect</span>
+            &nbsp;&middot;&nbsp; <span class="job__org">Palo Alto Networks | RedMatter Solutions</span>
+          </div>
+          <span class="job__meta">Oct 2023 – Feb 2025 &middot; Tampa, FL / Arlington, VA (Remote)</span>
+        </div>
+        <ul>
+          <li>Architected and deployed <b>Splunk Enterprise Security</b> for FHFA — data models, correlation searches, adaptive response, and risk-based alerting (RBA) aligned to MITRE ATT&amp;CK.</li>
+          <li>Onboarded and normalized <b>IDS/IPS, firewall, NetFlow, and network telemetry</b> into the platform (CIM), giving analysts unified network + host visibility for hunting.</li>
+          <li>Built and tuned Cortex XSOAR playbooks (Python) to automate notable-event response — threat-intel enrichment, VirusTotal, identity APIs, auto-ticketing, and containment.</li>
+          <li>Optimized detection performance at scale — SPL refactoring, summary indexing, search-head clustering, and data-model acceleration — to reduce runtime and licensing pressure.</li>
+          <li>Integrated <b>STIX/TAXII/MISP</b> threat-intel feeds for automated IoC enrichment, scoring, and network-aware hunting across ingested telemetry.</li>
+          <li>Delivered SPL/detection training and runbook documentation enabling SOC analysts to independently build searches, dashboards, and investigations.</li>
+        </ul>
+      </div>
+
+      <!-- ---- GDIT / CENTCOM ---- -->
+      <div class="job">
+        <div class="job__head">
+          <div>
+            <span class="job__title">Lead Cybersecurity Engineer &amp; Architect</span>
+            &nbsp;&middot;&nbsp; <span class="job__org">GDIT / Crystal Clear Technologies — U.S. CENTCOM HQ</span>
+          </div>
+          <span class="job__meta">May 2017 – Sep 2023 &middot; MacDill AFB, Tampa, FL</span>
+        </div>
+        <ul>
+          <li>Architected and operated enterprise security monitoring processing <b>12&nbsp;TB/day at 150k EPS</b> across multi-domain DoD networks — indexer clusters, search-head clusters, and heavy forwarders.</li>
+          <li>Deployed and managed <b>Gigamon network TAPs / packet brokers across 12 isolated networks</b> (classified up to Secret/SIPR), aggregating and filtering traffic to feed NDR sensors and flow collectors.</li>
+          <li>Engineered and <b>certified a Forcepoint Cross-Domain Solution (CDS) guard</b> to pass <b>NetFlow from 12 segregated enclaves up to the SIPR network</b> — delivering cross-domain network visibility while preserving classification boundaries.</li>
+          <li>Deployed multiple production <b>Security Onion</b> instances — <b>Zeek and Suricata</b> sensors producing protocol evidence, IDS alerts, and full PCAP for network detection and forensic hunting.</li>
+          <li>Built correlation content and CIM-normalized parsers for <b>firewall, NDR, IDS/IPS, NetFlow, EDR, identity, and cloud</b> sources, including risk-based alerting and data-model acceleration.</li>
+          <li>Engineered <b>ingestion pipelines with Kafka, Cribl, and NiFi</b> — DLQs, backpressure handling, replay, and schema governance — ensuring zero data loss at DoD scale.</li>
+          <li>Achieved <b>40% MTTR reduction</b> and 25% false-positive drop via UEBA tuning, risk-scoring models, and behavioral baselines aligned to MITRE ATT&amp;CK.</li>
+          <li>Implemented Zero Trust with <b>ForeScout NAC achieving 98% device visibility</b>; fed NAC + network posture data into continuous compliance correlation and alerting.</li>
+          <li>Used <b>Ansible</b> to automate node builds, parser/TA deployment, and index configuration across classified and unclassified enclaves, eliminating manual drift.</li>
+          <li>Led <b>ATO / RMF accreditation across 12 classified domains</b>, aligning network monitoring and logging controls with DoD SRG requirements.</li>
+        </ul>
+      </div>
+
+      <!-- ---- Earlier consolidated ---- -->
+      <div class="job">
+        <div class="job__head">
+          <div>
+            <span class="job__title">Lead SIEM / SOC Engineer &amp; Architect</span>
+            &nbsp;&middot;&nbsp; <span class="job__org">HHS CSIRC, Protiviti, Deloitte, AT&amp;T, DTRA, DISA</span>
+          </div>
+          <span class="job__meta">2009 – 2017 &middot; Multiple Locations</span>
+        </div>
+        <ul>
+          <li>Led enterprise <b>Splunk ES</b> deployment for HHS CSIRC (CDC, FDA, NIH, IHS) — HA indexer/search-head architecture, CIM-normalized telemetry, and HIPAA-aligned correlation.</li>
+          <li>Architected and migrated <b>DISA-Europe ArcSight SIEM to Splunk ES</b> at Deloitte — theater-wide deployment spanning USCENTCOM AORs (Kuwait, Afghanistan, Iraq, Bahrain, Qatar).</li>
+          <li>Built greenfield SIEM programs for Fortune 500 clients at Protiviti — onboarding, parser development, correlation content, and analyst training from zero to operational.</li>
+          <li>Led <b>24×7 NOSC/SOC operations</b> for DTRA — managing 12 network engineers and 12 cyber analysts with network monitoring, IPS, and SolarWinds as primary detection tooling.</li>
+        </ul>
+      </div>
+
+      <!-- ---- Early career ---- -->
+      <div class="job">
+        <div class="job__head">
+          <div>
+            <span class="job__title">Network &amp; Systems Engineer (Early Career)</span>
+            &nbsp;&middot;&nbsp; <span class="job__org">U.S. Air Force &amp; Consulting</span>
+          </div>
+          <span class="job__meta">2002 – 2009 &middot; Multiple Locations</span>
+        </div>
+        <ul>
+          <li>Served in U.S. Air Force communications/network roles supporting secure voice and data networks across multiple security domains.</li>
+          <li>Installed, configured, and hardened routers, switches, firewalls, and Windows/Linux servers — building the packet-level networking foundation behind today's NDR work.</li>
+          <li>Implemented patching, AV, backup, and monitoring baselines aligned to STIG requirements; designed LAN/WAN, Wi-Fi, and perimeter security for business clients.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================= DETECTION / HUNTING USE CASES ======================= -->
+    <section class="panel reveal" style="animation-delay:.28s">
+      <h2 class="section-title"><span class="tag">DETECTIONS</span> Network Detection &amp; Hunting Use Cases <span class="rule"></span></h2>
+      <div class="cap-grid">
+        <div class="cap">
+          <h4>C2 Beaconing &amp; Anomalous Connections</h4>
+          <p>Detect periodic callbacks, long-lived connections, and rare destinations using Zeek conn logs, JA3/JA3S TLS fingerprints, and flow timing analysis.</p>
+        </div>
+        <div class="cap">
+          <h4>DNS Tunneling &amp; Exfiltration</h4>
+          <p>Surface high-entropy subdomains, abnormal query volumes, TXT-record abuse, and unusual upstream resolvers from Zeek dns logs and NetFlow.</p>
+        </div>
+        <div class="cap">
+          <h4>Lateral Movement &amp; East-West Anomalies</h4>
+          <p>Correlate SMB/RDP/WinRM flows, new internal peer relationships, and scanning patterns to flag lateral movement inside the perimeter.</p>
+        </div>
+        <div class="cap">
+          <h4>Suspicious TLS / Certificate Activity</h4>
+          <p>Detect self-signed certs, mismatched SNI, expired/abnormal x509, and known-bad JA3 fingerprints from Zeek ssl/x509 evidence.</p>
+        </div>
+        <div class="cap">
+          <h4>Data Exfiltration &amp; Volume Anomalies</h4>
+          <p>Baseline per-host egress with NetFlow + Grafana; alert on abnormal upload volumes, off-hours transfers, and rare external destinations.</p>
+        </div>
+        <div class="cap">
+          <h4>IDS / Signature &amp; YARA Detection</h4>
+          <p>Author and tune Suricata signatures and YARA rules for malware, tooling, and TTP-specific patterns; correlate EVE alerts with flow context.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= TECHNICAL EXPERTISE ======================= -->
+    <section class="panel reveal" style="animation-delay:.32s">
+      <h2 class="section-title"><span class="tag">STACK</span> Technical Expertise <span class="rule"></span></h2>
+      <div class="tech">
+        <!-- JD-critical tools highlighted first -->
+        <span class="hot">Corelight</span>
+        <span class="hot">Zeek</span>
+        <span class="hot">Suricata</span>
+        <span class="hot">PCAP</span>
+        <span class="hot">NetFlow / IPFIX</span>
+        <span class="hot">Grafana</span>
+        <span class="hot">Prometheus</span>
+        <span class="hot">InfluxDB</span>
+        <!-- supporting NDR / NSM -->
+        <span>Security Onion</span>
+        <span>Gigamon (TAP / Packet Broker)</span>
+        <span>Cisco Stealthwatch (NDR)</span>
+        <span>Network Security Monitoring (NSM)</span>
+        <span>Cross-Domain Solution (CDS)</span>
+        <span>Snort</span>
+        <span>YARA</span>
+        <span>Sigma Rules</span>
+        <span>JA3 / TLS Fingerprinting</span>
+        <span>Wireshark / tshark</span>
+        <span>Zero Trust (ZTNA)</span>
+        <span>ForeScout NAC</span>
+        <!-- detection / SIEM -->
+        <span>Splunk ES / SPL</span>
+        <span>Palo Alto XSIAM / Cortex XDR</span>
+        <span>Cortex XSOAR</span>
+        <span>Elastic / KQL</span>
+        <span>QRadar &middot; ArcSight</span>
+        <span>UEBA (Exabeam, Securonix)</span>
+        <span>MITRE ATT&amp;CK</span>
+        <!-- pipelines / dev -->
+        <span>Kafka / Pulsar</span>
+        <span>Cribl / Apache NiFi</span>
+        <span>Python (Automation &amp; APIs)</span>
+        <span>Flask / FastAPI / REST</span>
+        <span>Node.js / React</span>
+        <span>Ansible / IaC</span>
+        <span>GitHub Actions / CI-CD</span>
+        <span>Bash / Linux Hardening</span>
+        <span>AWS / Azure</span>
+        <span>NIST CSF / RMF</span>
+      </div>
+    </section>
+
+    <!-- ======================= CERTIFICATIONS ======================= -->
+    <section class="panel reveal" style="animation-delay:.36s">
+      <h2 class="section-title"><span class="tag">CERTS</span> Certifications <span class="rule"></span></h2>
+      <div class="cert-grid">
+        <span class="cert">EC-Council Certified Ethical Hacker (CEH)</span>
+        <span class="cert">GIAC Certified Incident Handler (GCIH)</span>
+        <span class="cert">CompTIA Security+</span>
+        <span class="cert">CompTIA Network+</span>
+        <span class="cert">CompTIA A+</span>
+        <span class="cert">Red Hat Certified System Administrator (RHCSA)</span>
+        <span class="cert">ArcSight Certified Administrator (ACIA)</span>
+        <span class="cert">ArcSight Certified Security Analyst (ACSA)</span>
+        <span class="cert">Cribl Certified User</span>
+        <span class="cert">Cribl Certified Services Consultant</span>
+        <span class="cert">Forcepoint Certified HS Guard Admin</span>
+        <span class="cert">Forescout Certified Associate (FSCA)</span>
+      </div>
+    </section>
+
+    <!-- ======================= EDUCATION / INFO ======================= -->
+    <section class="panel reveal" style="animation-delay:.40s">
+      <h2 class="section-title"><span class="tag">PROFILE</span> Education &amp; Additional Information <span class="rule"></span></h2>
+      <div class="info-grid">
+        <div class="info">
+          <h4>Education</h4>
+          <p><b>CCAF</b> — Data/Voice Network Systems (Top Honors); Electronics &amp; Communications (Honors)</p>
+        </div>
+        <div class="info">
+          <h4>Clearance</h4>
+          <p><b>U.S. Top Secret / SCI (DoD)</b> — Active 23 years</p>
+        </div>
+        <div class="info">
+          <h4>Languages</h4>
+          <p>Bilingual <b>English / Spanish</b></p>
+        </div>
+        <div class="info">
+          <h4>Work Mode</h4>
+          <p>Remote / Hybrid / On-site &middot; Open to relocation</p>
+        </div>
+        <div class="info">
+          <h4>Focus</h4>
+          <p>NDR &middot; NSM &middot; Detection Engineering &middot; Security Observability</p>
+        </div>
+        <div class="info">
+          <h4>Domains</h4>
+          <p>DoD &middot; Federal &middot; Enterprise &middot; Healthcare &middot; Finance</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= TIMELINE ======================= -->
+    <section class="panel reveal" style="animation-delay:.44s">
+      <h2 class="section-title"><span class="tag">HISTORY</span> Professional Timeline <span class="rule"></span></h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-date">Feb 2025 – Present</div><div class="tl-role">Principal Cybersecurity Engineer / Co-Founder</div><div class="tl-org">Xbitium Technologies — Tampa, FL</div></div>
+        <div class="tl-item"><div class="tl-date">Oct 2023 – Feb 2025 &middot; 1.4 yrs</div><div class="tl-role">Sr. Cybersecurity Consultant &amp; Solutions Architect</div><div class="tl-org">Palo Alto Networks | RedMatter Solutions — Tampa, FL / Arlington, VA</div></div>
+        <div class="tl-item"><div class="tl-date">May 2017 – Sep 2023 &middot; 6.3 yrs</div><div class="tl-role">Lead Cybersecurity Engineer &amp; Architect</div><div class="tl-org">GDIT / Crystal Clear Technologies — U.S. CENTCOM HQ, MacDill AFB</div></div>
+        <div class="tl-item"><div class="tl-date">Nov 2015 – Apr 2017 &middot; 1.5 yrs</div><div class="tl-role">Lead Cybersecurity Engineer</div><div class="tl-org">Merlin International (HHS CSIRC) — Atlanta, GA</div></div>
+        <div class="tl-item"><div class="tl-date">Aug 2014 – Nov 2015 &middot; 1.3 yrs</div><div class="tl-role">Sr. Manager / SIEM SME</div><div class="tl-org">Protiviti Inc. (Fortune 500 Clients) — Atlanta, GA</div></div>
+        <div class="tl-item"><div class="tl-date">Apr 2012 – Aug 2014 &middot; 2.3 yrs</div><div class="tl-role">Sr. Manager / SIEM SME</div><div class="tl-org">Deloitte &amp; Touche LLP (DISA Europe) — Stuttgart, Germany</div></div>
+        <div class="tl-item"><div class="tl-date">Feb 2011 – Apr 2012 &middot; 1.2 yrs</div><div class="tl-role">Sr. Information Assurance Engineer</div><div class="tl-org">AT&amp;T GSI (USCENTCOM) — Arifjan, Kuwait</div></div>
+        <div class="tl-item"><div class="tl-date">Jan 2009 – Feb 2011 &middot; 2 yrs</div><div class="tl-role">NOSC Manager / Network Engineer</div><div class="tl-org">Defense Engineering Inc. (DTRA) — Arlington, VA</div></div>
+        <div class="tl-item"><div class="tl-date">Aug 2006 – Jan 2009 &middot; 2.5 yrs</div><div class="tl-role">Network Engineer</div><div class="tl-org">Mutual Telecom Services — Multiple Locations</div></div>
+        <div class="tl-item"><div class="tl-date">Aug 2002 – Aug 2006 &middot; 4 yrs</div><div class="tl-role">Network Specialist</div><div class="tl-org">U.S. Air Force (Active Duty) — Ramstein, Germany</div></div>
+      </div>
+    </section>
+
+    <div class="footer">© 2026 Julio Martinez &middot; Principal Cybersecurity Engineer &middot; Julio@xbitium.com</div>
+  </div>
+
+  <!-- ======================= SCRIPTS ======================= -->
+  <script>
+    /* ----------------------------------------------------------------------
+       Theme toggle. Defaults to dark. We swap the data-theme attribute on
+       <html> and update the button label. No localStorage (not supported in
+       this preview sandbox) — when you self-host you can add it back if wanted.
+       ---------------------------------------------------------------------- */
+    function toggleTheme() {
+      var root = document.documentElement;
+      var isDark = root.getAttribute("data-theme") === "dark";
+      root.setAttribute("data-theme", isDark ? "light" : "dark");
+      // Button shows the theme you'd switch TO
+      document.getElementById("themeTxt").textContent = isDark ? "DARK" : "LIGHT";
+      document.getElementById("themeIcon").textContent = isDark ? "◑" : "◐";
+    }
+
+    /* ----------------------------------------------------------------------
+       PDF download. ALWAYS forces the LIGHT theme before printing so the saved
+       PDF is clean ink-on-paper (and ATS-friendly), no matter what's on screen.
+       The previous on-screen theme is restored once the print dialog closes.
+       window.print() -> "Save as PDF" keeps text selectable (good for ATS).
+       ---------------------------------------------------------------------- */
+    function downloadPDF() {
+      var root = document.documentElement;
+      var prevTheme = root.getAttribute("data-theme");   // remember current view
+      root.setAttribute("data-theme", "light");          // force light for the PDF
+
+      // Restore the user's theme once the print dialog closes
+      function restore() {
+        root.setAttribute("data-theme", prevTheme);
+        window.removeEventListener("afterprint", restore);
+      }
+      window.addEventListener("afterprint", restore);
+
+      // Small delay lets the light theme paint before the print dialog opens
+      setTimeout(function () { window.print(); }, 60);
+    }
+  </script>
 </body>
 </html>
-
